@@ -2,6 +2,7 @@
 .tools/
 .quarto/
 site/_site/
+dist/
 site/.quarto/
 __pycache__/
 .pytest_cache/

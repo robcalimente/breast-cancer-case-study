@@ -60,6 +60,8 @@ Every notebook executes in a fresh kernel after the pipeline. Notebook outputs a
 
 The CI workflow repeats those checks and uploads the static site as a build artifact. It does not publish to GitHub Pages automatically.
 
+The private Sites preview uses `uv run python scripts/stage_site.py` to copy verified Quarto output into its supported `dist/` directory. The analysis sources and Quarto output location remain the same.
+
 ## Files
 
 ```text
