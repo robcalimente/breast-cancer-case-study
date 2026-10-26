@@ -1,0 +1,19 @@
+{
+  "medians": {
+    "radius_mean": {
+      "B": 12.21,
+      "M": 17.385
+    },
+    "texture_mean": {
+      "B": 17.53,
+      "M": 21.520000000000003
+    },
+    "concave_points_worst": {
+      "B": 0.07431,
+      "M": 0.1827
+    }
+  },
+  "radius_perimeter_correlation": 0.9978146993019572,
+  "radius_area_correlation": 0.9867402295052329,
+  "development_rows": 455
+}

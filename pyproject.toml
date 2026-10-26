@@ -1,0 +1,25 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "cancer-study"
+version = "0.1.0"
+description = "From Sample to Signal: a reproducible breast-mass classification study"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "pandas>=2.2,<3", "numpy>=2,<3", "scikit-learn>=1.6,<1.8",
+  "matplotlib>=3.9,<4", "seaborn>=0.13,<0.14", "duckdb>=1.2,<2",
+  "pyarrow>=19,<24", "scipy>=1.14,<2", "joblib>=1.4,<2",
+  "nbformat>=5.10,<6", "nbclient>=0.10,<0.11", "ipykernel>=6.29,<8",
+  "jupyter>=1.1,<2", "pytest>=8,<10",
+]
+
+[project.scripts]
+cancer-study = "cancer_study.cli:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/cancer_study"]

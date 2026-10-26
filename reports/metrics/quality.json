@@ -1,0 +1,24 @@
+{
+  "status": "passed",
+  "rows": 569,
+  "measurement_columns": 30,
+  "missing_values": 0,
+  "duplicate_identifiers": 0,
+  "duplicate_feature_vectors": 0,
+  "nonfinite_values": 0,
+  "negative_measurements": 0,
+  "benign": 357,
+  "malignant": 212,
+  "zero_measurements": 78,
+  "checks": [
+    "column count and order",
+    "nonempty source",
+    "complete values",
+    "valid labels",
+    "both classes present",
+    "unique numeric identifiers",
+    "numeric finite measurements",
+    "nonnegative measurements",
+    "no duplicate feature vectors"
+  ]
+}

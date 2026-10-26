@@ -1,0 +1,8 @@
+{
+  "identity": "78e1865a803932500e694c47451944a4722b5be3cf63efd7f78607aadf1e639e",
+  "policy": "Reuse these results; no model or threshold revision using this holdout.",
+  "artifacts": {
+    "reports/metrics/holdout.json": "cdcf6862e41d1e355dd44d68489f0351dfd2b6a8bb06175ca57dd378081d0b3a",
+    "reports/metrics/holdout_predictions.csv": "b0fd801bc9212985a607cf5d0cdbb575aae8896aba1b16ca7e2adea19ca3281b"
+  }
+}

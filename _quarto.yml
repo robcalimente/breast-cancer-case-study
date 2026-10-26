@@ -1,0 +1,68 @@
+project:
+  type: website
+  output-dir: site/_site
+  render:
+    - index.qmd
+    - methods.qmd
+    - notebooks/01_data_audit.ipynb
+    - notebooks/02_exploration.ipynb
+    - notebooks/03_model_selection.ipynb
+    - notebooks/04_final_evaluation.ipynb
+    - "!site/assets/notebooks/**"
+  resources:
+    - site/assets/**
+    - site/explorer.js
+    - site/explorer-model.mjs
+    - notebooks/*.ipynb
+    - data/README.md
+    - data/source.json
+    - protocol.json
+    - reports/metrics/**
+    - reports/manifests/**
+  execute-dir: project
+
+website:
+  title: "From Sample to Signal"
+  description: "A visual breast-mass classification study by Rob Calimente, from validated source data to a frozen model evaluation."
+  site-url: https://from-sample-to-signal.swift-clock-0959.chatgpt.site
+  search: false
+  navbar:
+    title: "SAMPLE / SIGNAL"
+    background: light
+    right:
+      - text: The study
+        href: index.qmd
+      - text: Methods
+        href: methods.qmd
+      - text: Notebooks
+        menu:
+          - text: 01 · Data audit
+            href: notebooks/01_data_audit.ipynb
+          - text: 02 · Exploration
+            href: notebooks/02_exploration.ipynb
+          - text: 03 · Model development
+            href: notebooks/03_model_selection.ipynb
+          - text: 04 · Final evaluation
+            href: notebooks/04_final_evaluation.ipynb
+
+format:
+  html:
+    theme: [cosmo, site/styles.scss]
+    toc: true
+    toc-depth: 2
+    code-fold: true
+    code-summary: "Show the Python"
+    code-tools: false
+    smooth-scroll: false
+    anchor-sections: true
+    link-external-newwindow: true
+
+execute:
+  enabled: true
+  error: false
+  warning: false
+  cache: false
+  freeze: false
+  daemon: false
+
+jupyter: python3

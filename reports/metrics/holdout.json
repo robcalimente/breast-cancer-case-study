@@ -1,0 +1,27 @@
+{
+  "n": 114,
+  "positive_class": "Malignant = 1",
+  "threshold": 0.5478283925728269,
+  "tn": 72,
+  "fp": 0,
+  "fn": 3,
+  "tp": 39,
+  "accuracy": 0.9736842105263158,
+  "sensitivity": 0.9285714285714286,
+  "specificity": 1.0,
+  "precision": 1.0,
+  "roc_auc": 0.996031746031746,
+  "average_precision": 0.994273631904294,
+  "brier_score": 0.021313139001192277,
+  "sensitivity_wilson_95": [
+    0.8099057319884169,
+    0.9754095901266941
+  ],
+  "specificity_wilson_95": [
+    0.9493488274035422,
+    1.0
+  ],
+  "model": "Logistic regression",
+  "partition": "holdout",
+  "evaluation_identity": "78e1865a803932500e694c47451944a4722b5be3cf63efd7f78607aadf1e639e"
+}

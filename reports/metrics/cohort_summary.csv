@@ -1,0 +1,5 @@
+partition,diagnosis,samples,percent_within_partition
+development,Benign,285,62.64
+development,Malignant,170,37.36
+holdout,Benign,72,63.16
+holdout,Malignant,42,36.84

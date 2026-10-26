@@ -1,0 +1,38 @@
+[
+  {
+    "threshold": 0.0,
+    "tp": 170,
+    "tn": 0,
+    "fp": 285,
+    "fn": 0,
+    "sensitivity": 1.0,
+    "specificity": 0.0
+  },
+  {
+    "threshold": 0.5,
+    "tp": 162,
+    "tn": 281,
+    "fp": 4,
+    "fn": 8,
+    "sensitivity": 0.9529411764705882,
+    "specificity": 0.9859649122807017
+  },
+  {
+    "threshold": 1.0,
+    "tp": 2,
+    "tn": 285,
+    "fp": 0,
+    "fn": 168,
+    "sensitivity": 0.011764705882352941,
+    "specificity": 1.0
+  },
+  {
+    "threshold": 0.5478283925728269,
+    "tp": 162,
+    "tn": 284,
+    "fp": 1,
+    "fn": 8,
+    "sensitivity": 0.9529411764705882,
+    "specificity": 0.9964912280701754
+  }
+]

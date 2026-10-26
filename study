@@ -1,0 +1,25 @@
+#!/bin/sh
+set -eu
+cd "$(dirname "$0")"
+export QUARTO_PYTHON="$PWD/.venv/bin/python"
+export PATH="$PWD/.venv/bin:$PATH"
+export JUPYTER_PATH="$PWD/.venv/share/jupyter"
+export MPLCONFIGDIR="$PWD/.venv/matplotlib"
+quarto_bin="${QUARTO_BIN:-quarto}"
+if [ -x "$PWD/.tools/quarto/bin/quarto" ]; then quarto_bin="$PWD/.tools/quarto/bin/quarto"; fi
+case "${1:-help}" in
+  run) exec .venv/bin/python -m cancer_study.cli run ;;
+  preview) exec "$quarto_bin" preview --no-browser ;;
+  render) exec "$quarto_bin" render ;;
+  notebooks) exec .venv/bin/python scripts/execute_notebooks.py ;;
+  reproduce) exec .venv/bin/python scripts/reproduce_development.py ;;
+  check)
+    .venv/bin/python -m pytest -q
+    node --test tests/explorer.test.mjs
+    ;;
+  setup)
+    if [ -x "$PWD/.tools/uv" ]; then exec "$PWD/.tools/uv" sync --frozen; fi
+    exec uv sync --frozen
+    ;;
+  *) printf '%s\n' 'Usage: ./study setup|run|preview|render|notebooks|reproduce|check' ;;
+esac

@@ -1,0 +1,24 @@
+{
+  "version": "1.0",
+  "positive_class": {"name": "Malignant", "value": 1, "source_label": "M"},
+  "seed": 42,
+  "holdout_fraction": 0.2,
+  "development_folds": 5,
+  "selection_metric": "roc_auc",
+  "practical_equivalence_auc": 0.005,
+  "simplicity_order": ["Logistic regression", "Calibrated RBF SVM", "Random forest"],
+  "candidates": {
+    "Logistic regression": {"C": 1.0, "max_iter": 5000},
+    "Calibrated RBF SVM": {"C": 1.0, "gamma": "scale", "calibration": "sigmoid", "calibration_folds": 3},
+    "Random forest": {"n_estimators": 300, "max_depth": 5, "min_samples_leaf": 3}
+  },
+  "threshold_rule": "Maximum specificity among development out-of-fold thresholds with sensitivity >= 0.95; ties prefer the highest threshold.",
+  "illustrative_sensitivity_target": 0.95,
+  "threshold_target_rationale": "Illustrate prioritizing fewer missed malignant samples while retaining specificity. This is an analysis assumption, not a clinical standard.",
+  "resampling": "none",
+  "feature_selection": "none; all 30 measurements, excluding identifier and diagnosis",
+  "calibration": "Sigmoid calibration for SVM wraps the complete scaler-model pipeline inside each calibration fold. Logistic regression and random forest probabilities are assessed without added calibration.",
+  "final_evaluation": "Freeze the selected pipeline and development-selected threshold before evaluating the holdout. Reuse cached final results on rerun; reject an incompatible freeze.",
+  "uncertainty": "95% Wilson intervals for holdout sensitivity and specificity; fold standard deviation is descriptive, not a confidence interval.",
+  "scope": "Classification of sampled breast masses in the UCI WDBC benchmark; no inference about future risk, population screening, or clinical readiness."
+}

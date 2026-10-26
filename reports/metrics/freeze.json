@@ -1,0 +1,25 @@
+{
+  "model": "Logistic regression",
+  "threshold": 0.5478283925728269,
+  "frozen_at_utc": "2026-10-26T19:40:31.350866+00:00",
+  "training_identity": {
+    "files": {
+      "protocol.json": "e87181ee71de7e5c086fda41752ef9ed7bd360367a1b1340de1354052329026b",
+      "uv.lock": "d3161dcca71c3e1354c8b722b29d519ea4f1cff7c0a6c10840391703d66cda54",
+      "data/raw/wdbc.data": "d606af411f3e5be8a317a5a8b652b425aaf0ff38ca683d5327ffff94c3695f4a",
+      "data/processed/splits.csv": "b151b5d41702097d4f4ddbdec4eafc4b6a814b6f90a838e60cf7070acb383fc8",
+      "src/cancer_study/train.py": "db1f49d9626c3255e8cad39545b8a3c0488f8233d128ad1f2ac6d69da732bc51",
+      "src/cancer_study/ingest.py": "f599fc5647e0bc30051cd03815ac989b4e2ebd92b13b9e9324ff9148296e2a2e",
+      "src/cancer_study/datasets.py": "39a10dbc2374b1f22e62e3c3af25b29dc0e7243430c5b728c6544b99335313b7"
+    },
+    "scikit_learn": "1.7.2"
+  },
+  "training_fingerprint": "2798a592c45431e2e5f20ecfee38e5d6baf8a13bfc2227bc7211124e67733e71",
+  "model_sha256": "4d38c1d7acd934a2ac7c0161f856b4fb08f355ed49a14054182d89945b5c947b",
+  "development_artifacts": {
+    "reports/metrics/cross_validation.csv": "7863de29f7ca26b8ef4e8b75813e7b995a443410b3d78eaed65af23be3d86247",
+    "reports/metrics/development_predictions.csv": "89bb8d5af020801ec7f371ebe878a1bb16f4bddf69bd32cd4a2e0d9a9d6a2962",
+    "reports/metrics/development.json": "afcf282423ae6057619091f5afd4cb6e6a987db90eea8e238a5c951f00d8f19f"
+  },
+  "note": "Model choice and threshold use development data only. OOF estimates are exploratory after selection, not unbiased final performance."
+}

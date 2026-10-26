@@ -1,0 +1,104 @@
+---
+title: "Protocol & methods"
+subtitle: "The decisions behind From Sample to Signal"
+---
+
+## Question and scope
+
+How well can thirty cell-nucleus measurements distinguish breast-mass samples labeled benign from those labeled malignant in the UCI Wisconsin Diagnostic Breast Cancer dataset?
+
+This is a retrospective benchmark study. It does not establish future-risk prediction, screening effectiveness, demographic fairness, or clinical readiness. The table contains sample identifiers, not a verified longitudinal patient history.
+
+## Source and observation unit
+
+The source contains 569 samples: 357 benign and 212 malignant. Each row contains an identifier, a recorded diagnosis, and thirty measurements derived from digitized fine needle aspirate images of a breast mass. Ten properties are summarized by mean, standard error, and the mean of the three largest values (“worst”). The source dictionary does not establish physical units for the numeric columns, so charts use the source scale.
+
+[UCI dataset and license](https://archive.ics.uci.edu/dataset/17/breast+cancer+wisconsin+diagnostic) · [Local data dictionary](data/README.md) · [Source manifest](data/source.json)
+
+Source SHA-256: `d606af411f3e5be8a317a5a8b652b425aaf0ff38ca683d5327ffff94c3695f4a`. The snapshot was retrieved at `2026-10-26T19:29:57.455585+00:00` and retained with its original documentation. UCI licenses the dataset under CC BY 4.0. Citation: Wolberg, W., Mangasarian, O., Street, N., & Street, W. (1993). Breast Cancer Wisconsin (Diagnostic). UCI Machine Learning Repository. https://doi.org/10.24432/C5DW2B.
+
+## Validation and data handling
+
+The loader rejects incorrect column counts or order, empty data, missing values, invalid labels, absent classes, malformed or duplicate identifiers, nonnumeric or non-finite measurements, negative values, and duplicate feature vectors. Duplicate feature vectors require explicit source review or grouped splitting rather than silent deletion. Legitimate zeros are retained. The accepted snapshot passed all 9 check groups; no rows were removed and no values were imputed.
+
+The label mapping is **malignant = 1**, benign = 0. The modeling interface explicitly selects the thirty named measurements, excluding ID, label, and partition metadata. No synthetic samples, resampling, or supervised feature selection are used.
+
+Source validation covers the full ingestion. EDA that informs modeling uses development data only. DuckDB SQL produces cohort counts and development-only feature summaries; Parquet preserves validated tables. Tests exercise deliberately malformed fixtures separately from the real data.
+
+## Protocol, split, and candidates
+
+The executable [protocol](protocol.json) was written before training; its registration is saved in [protocol-registration.json](reports/metrics/protocol-registration.json). This is a local chronological record, not an independent preregistration service. Protocol SHA-256: `e87181ee71de7e5c086fda41752ef9ed7bd360367a1b1340de1354052329026b`.
+
+The source is split once with `train_test_split(test_size=0.2, stratify=target, random_state=42)`. Saved IDs define 455 development samples and 114 holdout samples for this snapshot. No seed search is performed. The source has unique IDs and no identical feature vectors; available metadata cannot establish whether different IDs might represent related patients.
+
+All candidates share five stratified, shuffled development folds with seed 42. There is no hyperparameter search:
+
+| Candidate | Fixed settings |
+| --- | --- |
+| Majority baseline | `DummyClassifier(strategy="prior")`: constant training-fold prevalence, all-negative classifications at 0.5 |
+| Logistic regression | Training-fold `StandardScaler`, L2 regularization, `C=1`, `max_iter=5000` |
+| Calibrated RBF SVM | `C=1`, `gamma="scale"`; sigmoid calibration with three internal stratified folds, wrapping the entire scaler-SVM pipeline |
+| Random forest | 300 trees, maximum depth 5, minimum leaf size 3, seed 42, one worker |
+
+Selection uses mean validation ROC-AUC. The simplest candidate within 0.005 of the highest candidate mean wins, in the predeclared order logistic regression, calibrated RBF SVM, then random forest. The selected pipeline is **Logistic regression**.
+
+Fold standard deviation is descriptive variation, not a confidence interval. After selecting among candidates, the winning validation score and selected-candidate out-of-fold predictions are optimistic estimates of performance; final claims use the separate holdout.
+
+## Threshold and probability estimates
+
+The operating threshold maximizes specificity among thresholds achieving at least 95% sensitivity on selected-candidate development out-of-fold predictions. Ties favor the highest threshold. This target illustrates a preference for fewer missed malignant samples; it is not a clinical requirement or a claim of optimal patient outcomes.
+
+The frozen threshold is **0.547828393**. A probability equal to the threshold is classified as malignant. The fitted pipeline and exact threshold are recorded in [freeze.json](reports/metrics/freeze.json) before final evaluation. The interactive explorer uses only development out-of-fold predictions and does not change the final evaluation.
+
+SVM probabilities are sigmoid-calibrated within development folds. Logistic regression and random forest are assessed without an added calibration step. Holdout calibration plots use five quantile bins and are descriptive; their small sample size makes the apparent curve uncertain. No probability recalibration is fitted on the holdout.
+
+## Final evaluation and uncertainty
+
+The selected pipeline is fitted on all development observations. The holdout is evaluated at the frozen threshold, with 39 true positives, 72 true negatives, 0 false positives, and 3 false negatives. Metrics include accuracy, malignant-class sensitivity and precision, specificity, ROC-AUC, average precision, and Brier score. Malignant is positive for every metric. Average precision is the scikit-learn ranking metric, not a trapezoidal PR-area calculation.
+
+Sensitivity and specificity receive 95% Wilson score intervals based on their respective positive and negative holdout denominators. These intervals condition on the fitted model and this sampling frame. They do not quantify model-selection uncertainty, all sources of dependence, or performance in another institution. No uncertainty interval is claimed for ROC-AUC here.
+
+Final predictions and metrics are saved with hashes in an evaluation lock. Compatible reruns verify and reuse them. Changed training inputs, model bytes, or evaluator code cause a failure rather than silently revising the published result. This guards against accidental iteration; it cannot prevent a person from deliberately deleting the lock. A revised model needs fresh evaluation evidence.
+
+The error table is post-evaluation descriptive analysis. No model or threshold revision follows from these errors. Feature differences describe associations and do not provide causal explanations of a sample's diagnosis.
+
+## Reproduce and inspect
+
+```bash
+uv sync --frozen
+uv run cancer-study run
+uv run pytest
+node --test tests/explorer.test.mjs
+uv run python scripts/execute_notebooks.py
+QUARTO_PYTHON="$PWD/.venv/bin/python" quarto render
+```
+
+Use Python 3.12, the committed `uv.lock`, and Quarto 1.10.19. The committed source snapshot permits offline data acquisition; installing packages requires network access or a populated cache. Bitwise model and Parquet reproducibility across operating systems is not promised. Source bytes and persisted split assignments have exact hashes, and the saved frozen artifacts make the reported study inspectable without retraining.
+
+The notebooks execute from clean kernels after the pipeline produces their inputs. They call the shared package and inspect its saved results, with no second modeling implementation.
+
+- [01 · Data audit](notebooks/01_data_audit.ipynb)
+- [02 · Exploration](notebooks/02_exploration.ipynb)
+- [03 · Model development](notebooks/03_model_selection.ipynb)
+- [04 · Final evaluation](notebooks/04_final_evaluation.ipynb)
+- [Download notebook 01](site/assets/notebooks/01_data_audit.zip) · [02](site/assets/notebooks/02_exploration.zip) · [03](site/assets/notebooks/03_model_selection.zip) · [04](site/assets/notebooks/04_final_evaluation.zip) (ZIP files containing executed `.ipynb` notebooks)
+- [Raw final prediction CSV](reports/metrics/holdout_predictions.csv)
+- [Development prediction CSV](reports/metrics/development_predictions.csv)
+- [Fold results CSV](reports/metrics/cross_validation.csv)
+- [Quality report](reports/metrics/quality.json)
+- [Run manifest and artifact hashes](reports/manifests/run.json)
+
+## Limitations and next evidence
+
+This historical dataset is small, lacks detailed demographic and institutional metadata in the supplied table, and represents a particular measurement process. A random holdout within the same source does not establish transportability. The 95% development-sensitivity target does not guarantee 95% sensitivity on new data. Class prevalence also affects precision and probability interpretation.
+
+External validation would require independent breast-mass samples with compatible measurements and label definitions, and a specified intended use. Histopathology would be a separate study: the reference project's image-patch cohort is not linked to this FNA-derived table, so the sources should not be joined or their accuracies compared as a controlled modality experiment.
+
+## References and inspiration
+
+- [UCI Breast Cancer Wisconsin (Diagnostic)](https://doi.org/10.24432/C5DW2B)
+- [scikit-learn: preprocessing and data leakage](https://scikit-learn.org/stable/common_pitfalls.html)
+- [scikit-learn: cross-validation](https://scikit-learn.org/stable/modules/cross_validation.html)
+- [scikit-learn: threshold tuning](https://scikit-learn.org/stable/modules/classification_threshold.html)
+- [Quarto: Python and Jupyter](https://quarto.org/docs/computations/python.html)
+- [Fitzpatrickmn/Machine-Learning-Cancer-Classifier](https://github.com/Fitzpatrickmn/Machine-Learning-Cancer-Classifier), subject inspiration; this implementation uses the original UCI source and its own pipeline.

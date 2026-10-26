@@ -1,0 +1,9 @@
+{
+  "url": "https://archive.ics.uci.edu/static/public/17/breast+cancer+wisconsin+diagnostic.zip",
+  "retrieved_at_utc": "2026-10-26T19:29:57.455585+00:00",
+  "sha256": "d606af411f3e5be8a317a5a8b652b425aaf0ff38ca683d5327ffff94c3695f4a",
+  "license": "CC BY 4.0",
+  "citation": "Wolberg, W., Mangasarian, O., Street, N., & Street, W. (1993). Breast Cancer Wisconsin (Diagnostic). UCI Machine Learning Repository. https://doi.org/10.24432/C5DW2B",
+  "file": "data/raw/wdbc.data",
+  "observation_unit": "one breast-mass sample"
+}

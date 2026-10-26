@@ -1,0 +1,134 @@
+---
+title: "From Sample to Signal"
+pagetitle: "From Sample to Signal · Rob Calimente"
+page-layout: custom
+toc: false
+body-classes: study-home
+---
+
+```{=html}
+<div class="study">
+  <section class="hero" aria-labelledby="study-title">
+    <div>
+      <div class="eyebrow">A data study by Rob Calimente</div>
+      <h1 id="study-title">From sample<br>to <em>signal.</em></h1>
+      <p class="hero-deck">A prediction is the end of a long chain of decisions. This is a look at the whole chain.</p>
+      <a class="text-link" href="#source">Follow the study ↓</a>
+      <p class="hero-note">Breast-mass classification · Python + SQL<br>Data engineering / Analysis / Data science</p>
+    </div>
+    <figure>
+      <img src="site/assets/sample-map.svg" alt="@DEV_N@ development samples plotted by mean radius and worst concave points. Teal benign circles and amber malignant triangles show separation with overlap." width="720" height="570" fetchpriority="high">
+      <figcaption><span class="chart-label">The starting point</span><br>Two of thirty measurements. Each mark is one breast-mass sample; color and shape show the recorded diagnosis.</figcaption>
+    </figure>
+  </section>
+
+  <nav class="study-index" aria-label="Study chapters">
+    <a href="#source"><span>01</span>The sample</a><a href="#pipeline"><span>02</span>The pipeline</a>
+    <a href="#exploration"><span>03</span>The signal</a><a href="#models"><span>04</span>The model</a>
+    <a href="#decisions"><span>05</span>The tradeoff</a><a href="#evaluation"><span>06</span>The evidence</a>
+  </nav>
+
+  <section class="chapter" id="source" aria-labelledby="source-title">
+    <div class="chapter-label">01 / The sample <span>Problem framing & source literacy</span></div>
+    <div class="chapter-intro">
+      <h2 id="source-title">Start with what<br>a row really means.</h2>
+      <p>These are measurements of cell nuclei, computed from digitized fine needle aspirate images of breast masses. The question is specific: can those measurements distinguish samples labeled benign from samples labeled malignant?</p>
+    </div>
+    <div class="source-stat-row">
+      <div class="source-stat"><strong>@TOTAL@</strong><span>breast-mass samples</span></div>
+      <div class="source-stat"><strong>30</strong><span>numeric measurements</span></div>
+      <div class="source-stat"><strong>2</strong><span>recorded diagnosis classes</span></div>
+    </div>
+    <div class="source-definition">
+      <p class="small">Ten properties, from radius to concavity, are summarized three ways. The identifier is retained for tracing observations and excluded from model inputs.</p>
+      <div class="measurement-groups">
+        <div><b>Mean</b><p>The average measurement across nuclei.</p></div>
+        <div><b>Standard error</b><p>A summary of uncertainty around the mean.</p></div>
+        <div><b>Worst</b><p>The mean of the three largest values, as defined by the source.</p></div>
+      </div>
+    </div>
+    <p class="small">Source: <a href="https://archive.ics.uci.edu/dataset/17/breast+cancer+wisconsin+diagnostic">UCI Wisconsin Diagnostic Breast Cancer</a> · @BENIGN@ benign / @MALIGNANT@ malignant · Donated in 1995 · CC BY 4.0. These observations concern sampled masses, not future cancer risk.</p>
+  </section>
+
+  <section class="chapter" id="pipeline" aria-labelledby="pipeline-title">
+    <div class="chapter-label">02 / The pipeline <span>Data engineering & quality controls</span></div>
+    <div class="chapter-intro">
+      <h2 id="pipeline-title">Establish trust<br>before finding patterns.</h2>
+      <p>A small dataset still needs a reliable path from source to analysis. Source bytes are preserved, checked against a recorded SHA-256 hash, validated against an explicit schema, and transformed into Parquet tables.</p>
+    </div>
+    <div class="lineage" aria-label="Data pipeline: @TOTAL@ source rows, @CHECKS@ quality checks, @DEV_N@ development samples, @HOLDOUT_N@ reserved holdout samples">
+      <div class="lineage-step"><strong>@TOTAL@</strong><span>Source rows</span><p>Original UCI snapshot<br>32 fields, including ID and label</p></div>
+      <div class="lineage-step"><strong>@CHECKS@ / @CHECKS@</strong><span>Quality checks passed</span><p>No missing values or duplicate vectors<br>Zero measurements are valid</p></div>
+      <div class="lineage-step"><strong>@DEV_N@</strong><span>Development samples</span><p>Exploration, model comparison,<br>and threshold selection</p></div>
+      <div class="lineage-step"><strong>@HOLDOUT_N@</strong><span>Reserved holdout samples</span><p>A fixed, stratified split<br>Used after choices are frozen</p></div>
+    </div>
+    <div class="engineering-notes">
+      <div><h3>Clean data is a finding.</h3><p>The source passed the checks. There were no missing values to impute or duplicate rows to remove. Invalid labels, schema changes, and non-finite measurements are rejected; labeled test fixtures verify that behavior.</p></div>
+      <div><h3>Every result has a route back.</h3><p>The pipeline saves source and artifact hashes, split assignments, SQL summaries, a model freeze, and an evaluation record. Reruns verify the frozen study and reuse its final results.</p></div>
+    </div>
+    <details><summary>Inspect a development-only SQL summary</summary><pre class="inline-code">SELECT diagnosis, count(*) AS samples,
+       median(radius_mean) AS median_radius
+FROM samples
+WHERE partition = 'development'
+GROUP BY diagnosis;</pre><p class="small">DuckDB queries the validated table directly. <a href="notebooks/01_data_audit.ipynb">Open the data audit →</a></p></details>
+  </section>
+
+  <section class="chapter" id="exploration" aria-labelledby="exploration-title">
+    <div class="chapter-label">03 / The signal <span>Exploratory analysis & interpretation</span></div>
+    <div class="chapter-intro"><h2 id="exploration-title">Separation is useful.<br>Overlap matters too.</h2><p>Class distributions differ, but a single measurement does not settle every case. These figures use only the @DEV_N@ development samples; the holdout does not guide exploratory choices.</p></div>
+    <figure class="figure-wide"><img src="site/assets/distributions.svg" loading="lazy" alt="Development distributions of mean radius, mean texture, and worst concave points, with different class medians and overlapping ranges."><figcaption>Class distributions on the development partition. Vertical lines mark medians; density curves are descriptive smoothing. Measurements stay on the source scale because physical units are not established in the data dictionary.</figcaption></figure>
+    <div class="eda-detail">
+      <figure><img src="site/assets/correlations.svg" loading="lazy" alt="Correlation matrix of ten mean features. Mean radius and mean perimeter have Pearson correlation @RADIUS_CORR@."><figcaption class="small">Ten mean measurements · Development data only.</figcaption></figure>
+      <div><h3>Thirty columns do not mean thirty independent signals.</h3><p>Mean radius and mean perimeter have a Pearson correlation of @RADIUS_CORR@ in the development data. Several size-related measurements move together.</p><p>That supports comparing a regularized linear model with nonlinear alternatives. All thirty measurements remain in the models; no feature ranking is fitted on the full dataset.</p><p class="small">Association does not establish causation, and correlated predictors can make individual feature-importance rankings unstable.</p><a class="text-link" href="notebooks/02_exploration.ipynb">Read the exploration →</a></div>
+    </div>
+  </section>
+
+  <section class="chapter model-section" id="models" aria-labelledby="model-title">
+    <div class="chapter-label">04 / The model <span>Validation & model selection</span></div>
+    <div class="chapter-intro"><h2 id="model-title">Let complexity<br>earn its place.</h2><p>A majority-class baseline, logistic regression, a calibrated RBF SVM, and a random forest share the same five validation folds. Candidate settings and the selection rule were recorded before training.</p></div>
+    <div class="model-results">
+      <figure><img src="site/assets/model-comparison.svg" loading="lazy" alt="Five-fold validation ROC-AUC comparison, including a majority baseline. @SELECTED@ was selected by the declared simplicity rule."><figcaption>Dots: individual folds. Diamonds: means. Fold standard deviation describes variation; it is not a confidence interval. Higher ROC-AUC indicates better ranking.</figcaption></figure>
+      <div class="model-choice"><div class="chart-label">Selected pipeline</div><h3>@SELECTED@</h3><p>The simplest candidate within 0.005 ROC-AUC of the best mean validation score.</p><p>Mean validation ROC-AUC: <strong>@CV_MEAN@</strong><br>Fold standard deviation: <strong>@CV_SD@</strong></p><p class="small">Scaling is fitted inside training folds. SVM calibration wraps the entire scaler-model pipeline inside its own training folds. No oversampling is used.</p><a class="text-link" href="notebooks/03_model_selection.ipynb">Inspect model development →</a></div>
+    </div>
+  </section>
+
+  <section class="chapter" id="decisions" aria-labelledby="decision-title">
+    <div class="chapter-label">05 / The tradeoff <span>Threshold selection & decision analysis</span></div>
+    <div class="chapter-intro"><h2 id="decision-title">A probability still<br>needs a decision.</h2><p>Lowering the threshold flags more samples as malignant. That can catch more malignant samples while also flagging more benign ones. Move the threshold to see both sides of the tradeoff.</p></div>
+    <div class="explorer" id="threshold-explorer">
+      <div class="explorer-top"><div class="chart-label">Development predictions · @DEV_N@ samples</div><button id="reset-threshold" type="button" disabled>Use development choice ↺</button></div>
+      <div class="threshold-control"><div><label for="threshold">Classify as malignant at or above this probability</label><input type="range" id="threshold" min="0" max="1000" step="1" disabled aria-describedby="explorer-caption"><div class="range-endpoints"><span>0.00 · flag every sample</span><span>1.00 · flag only probabilities of 1</span></div></div><output id="threshold-value" for="threshold">@THRESHOLD_4@</output></div>
+      <div class="outcome-row"><div class="outcome-label">Observed malignant<small>Correctly flagged</small></div><div class="outcome-track" aria-hidden="true"><div id="malignant-good" class="outcome-good"></div><div id="malignant-error" class="outcome-error"></div></div><div class="outcome-readout" id="malignant-detected">—</div></div>
+      <div class="outcome-row"><div class="outcome-label">Observed benign<small>Correctly cleared</small></div><div class="outcome-track" aria-hidden="true"><div id="benign-good" class="outcome-good"></div><div id="benign-error" class="outcome-error"></div></div><div class="outcome-readout" id="benign-cleared">—</div></div>
+      <div class="outcome-legend"><span>Correctly classified</span><span>Misclassified</span></div>
+      <div class="explorer-numbers"><div><strong id="fn-count">—</strong><span>Malignant samples missed</span></div><div><strong id="fp-count">—</strong><span>Benign samples flagged</span></div><div><strong id="sensitivity">—</strong><span>Sensitivity · malignant detected</span></div><div><strong id="specificity">—</strong><span>Specificity · benign cleared</span></div></div>
+      <span id="tp-count" class="visually-hidden"></span><span id="tn-count" class="visually-hidden"></span>
+      <p id="explorer-caption" class="explorer-caption">These are out-of-fold development predictions from the selected candidate. They support exploration and threshold selection, and are optimistic after model selection. The illustrative rule maximizes specificity while reaching at least 95% development sensitivity. It is not a clinical standard.</p>
+      <p id="explorer-status" class="visually-hidden" role="status" aria-live="polite">Loading development predictions.</p>
+      <noscript><p class="small">Enable JavaScript to explore thresholds. The chosen threshold is @THRESHOLD@; the development results are also available in the methods page.</p></noscript>
+    </div>
+    <p class="small">The chosen threshold, @THRESHOLD@, was frozen before final evaluation. Moving this control does not change the final results below.</p>
+  </section>
+
+  <section class="chapter" id="evaluation" aria-labelledby="evaluation-title">
+    <div class="chapter-label">06 / The evidence <span>Final evaluation & uncertainty</span></div>
+    <div class="chapter-intro"><h2 id="evaluation-title">Now ask it about<br>unseen samples.</h2><p>The selected pipeline was fitted on development data and evaluated on @HOLDOUT_N@ reserved samples at the frozen threshold. The result: @CORRECT@ correct classifications, @FN@ missed malignant samples, and @FP@ benign samples flagged.</p></div>
+    <div class="holdout-grid">
+      <figure><img src="site/assets/holdout-confusion.svg" loading="lazy" alt="Final holdout confusion matrix: @TN@ true negatives, @FP@ false positives, @FN@ false negatives, and @TP@ true positives."><figcaption class="small">Observed diagnosis versus prediction · Malignant = positive<br>@HOLDOUT_POS@ malignant and @HOLDOUT_NEG@ benign holdout samples.</figcaption></figure>
+      <div><div class="result-stat"><strong>@SENSITIVITY@</strong><span>Sensitivity</span><p>@TP@ of @HOLDOUT_POS@ malignant samples detected.<br>95% Wilson interval: @SENS_CI@.</p></div><div class="result-stat"><strong>@SPECIFICITY@</strong><span>Specificity</span><p>@TN@ of @HOLDOUT_NEG@ benign samples correctly cleared.<br>95% Wilson interval: @SPEC_CI@.</p></div><div class="result-stat"><strong>@AUC@</strong><span>ROC-AUC</span><p>Threshold-independent ranking on this holdout.<br>Accuracy: @ACCURACY@ · Average precision: @AP@.</p></div><p class="small">Intervals reflect finite holdout counts conditional on this fitted model. They do not capture the full development process or performance at another institution.</p></div>
+    </div>
+    <p class="small">@TARGET_COMPARISON@</p>
+    <div class="errors"><h3>The mistakes stay in the story.</h3><p class="small">Every misclassified holdout sample is listed below. These observations were inspected after final evaluation; no model or threshold revision followed. @ERROR_OBSERVATION@</p>@ERROR_TABLE@</div>
+    <details><summary>Check probability quality as well as ranking</summary><figure class="figure-wide"><img src="site/assets/calibration.svg" loading="lazy" alt="Holdout calibration in five quantile bins and estimated probability histograms by observed diagnosis."><figcaption>The calibration curve is descriptive and uncertain with only @HOLDOUT_N@ samples. Brier score: @BRIER@; lower is better. No calibration was fitted on the holdout.</figcaption></figure></details>
+    <a class="text-link" href="notebooks/04_final_evaluation.ipynb">Read the final evaluation →</a>
+  </section>
+
+  <section class="chapter conclusion" aria-labelledby="conclusion-title">
+    <div><div class="chapter-label">What the study supports</div><h2 id="conclusion-title">A useful result.<br>A bounded claim.</h2><p>The measurements contain a strong signal for the recorded diagnosis in this benchmark. The frozen @SELECTED_LOWER@ pipeline detected @TP@ of @HOLDOUT_POS@ malignant holdout samples and correctly cleared @TN@ of @HOLDOUT_NEG@ benign ones.</p><p>The full result includes the source, the decisions, the mistakes, and the uncertainty. Those are the parts that make the work assessable and reproducible.</p><a class="text-link" href="methods.qmd">Read the protocol & methods →</a></div>
+    <ul class="limits"><li><b>A historical benchmark</b>A random split within one dataset does not establish performance on another hospital, collection process, or time period.</li><li><b>A specific observation unit</b>These are sampled breast masses. The analysis does not establish future-risk prediction or population-screening performance.</li><li><b>Limited metadata</b>The supplied table does not support an assessment of performance across demographic groups or institutions.</li><li><b>A next study, with new evidence</b>External validation would need compatible measurements and independent samples. Any model revision would require new evaluation evidence.</li></ul>
+  </section>
+
+  <footer class="study-footer"><div><strong>Rob Calimente · From Sample to Signal</strong><p>Built to make the path from source data to a model decision visible.</p><a href="https://robcalimente.github.io/">Portfolio ↗</a><a href="methods.qmd">Methods</a><a href="notebooks/01_data_audit.ipynb">Notebooks</a></div><div class="provenance"><p>Data: Wolberg, Mangasarian, Street & Street (1993), UCI Machine Learning Repository. <a href="https://doi.org/10.24432/C5DW2B">DOI / CC BY 4.0</a></p><p>Source SHA-256: <code>@SOURCE_SHORT@…</code><br>Model and threshold frozen before holdout evaluation.<br><a href="reports/manifests/run.json">Download the run manifest</a></p></div></footer>
+</div>
+<script type="module" src="site/explorer.js"></script>
+```

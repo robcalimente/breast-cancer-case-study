@@ -1,0 +1,21 @@
+model,fold,n,roc_auc
+Majority baseline,1,91,0.5
+Majority baseline,2,91,0.5
+Majority baseline,3,91,0.5
+Majority baseline,4,91,0.5
+Majority baseline,5,91,0.5
+Logistic regression,1,91,0.98968008255933948
+Logistic regression,2,91,0.99329205366357076
+Logistic regression,3,91,0.99638802889576894
+Logistic regression,4,91,0.9989680082559339
+Logistic regression,5,91,0.9994840041279669
+Calibrated RBF SVM,1,91,0.97626418988648089
+Calibrated RBF SVM,2,91,0.99432404540763664
+Calibrated RBF SVM,3,91,0.9989680082559339
+Calibrated RBF SVM,4,91,0.9989680082559339
+Calibrated RBF SVM,5,91,0.9989680082559339
+Random forest,1,91,0.9757481940144479
+Random forest,2,91,0.98348813209494312
+Random forest,3,91,0.99690402476780182
+Random forest,4,91,0.99742002063983481
+Random forest,5,91,0.99845201238390102

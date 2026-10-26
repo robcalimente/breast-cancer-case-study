@@ -1,0 +1,36 @@
+name: Verify study
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.13.5"
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: "1.10.19"
+      - run: uv sync --frozen
+      - run: uv run cancer-study run
+      - run: uv run pytest
+      - run: node --test tests/explorer.test.mjs
+      - run: uv run python scripts/reproduce_development.py
+      - run: uv run python scripts/execute_notebooks.py
+      - run: uv run quarto render
+      - run: uv run python scripts/check_site.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: from-sample-to-signal-site
+          path: site/_site
