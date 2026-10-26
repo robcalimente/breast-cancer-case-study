@@ -14,7 +14,7 @@ from sklearn.calibration import calibration_curve
 from .common import read_json
 from .ingest import BASE_FEATURES
 
-BENIGN, MALIGNANT, INK, MUTED, PAPER = "#217d80", "#c56636", "#182f37", "#60737a", "#faf8f3"
+BENIGN, MALIGNANT, INK, MUTED, PAPER = "#217d80", "#c56636", "#252b33", "#59636f", "#ffffff"
 LABELS = {"radius_mean": "Mean radius", "texture_mean": "Mean texture", "concave_points_worst": "Worst concave points"}
 
 
@@ -36,7 +36,7 @@ def save(fig, path: Path, title: str, description: str) -> None:
     svg = svg.replace("<svg ", '<svg role="img" aria-labelledby="chart-title chart-desc" ', 1)
     start = svg.index(">", svg.index("<svg")) + 1
     svg = svg[:start] + f'<title id="chart-title">{escape(title)}</title><desc id="chart-desc">{escape(description)}</desc>' + svg[start:]
-    path.write_text(svg)
+    path.write_text("\n".join(line.rstrip() for line in svg.splitlines()) + "\n")
 
 
 def render_figures(project: Path, development: pd.DataFrame, final: dict) -> None:
@@ -72,6 +72,21 @@ def render_figures(project: Path, development: pd.DataFrame, final: dict) -> Non
     fig.tight_layout(w_pad=2)
     save(fig, assets / "distributions.svg", "The classes differ, but their distributions overlap",
          "Smoothed development-set distributions for mean radius, mean texture, and worst concave points. Vertical lines mark class medians. Smoothing is descriptive and does not determine model inputs.")
+
+    # A separate composition preserves labels on narrow screens.
+    fig, axes = plt.subplots(3, 1, figsize=(4.5, 8.4))
+    for ax, column in zip(axes, LABELS):
+        for label in ["B", "M"]:
+            values = development.loc[development.diagnosis == label, column]
+            sns.kdeplot(values, ax=ax, color=colors[label], fill=True, alpha=.13,
+                        linewidth=1.8, clip=(0, None), label="Benign" if label == "B" else "Malignant")
+            ax.axvline(values.median(), color=colors[label], linestyle=":" if label == "B" else "--", alpha=.65)
+        ax.set(title=LABELS[column], xlabel="Source scale", ylabel="Density")
+        ax.grid(axis="y", alpha=.5)
+    axes[0].legend(frameon=False, fontsize=9)
+    fig.tight_layout(h_pad=2)
+    save(fig, assets / "distributions-mobile.svg", "Class distributions, stacked for narrow screens",
+         "The same three development distributions as the wide composition, arranged vertically to preserve readable labels.")
 
     columns = [f"{name}_mean" for name in BASE_FEATURES]
     labels = [name.replace("_", " ").capitalize() for name in BASE_FEATURES]
