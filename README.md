@@ -4,6 +4,19 @@ A visual study of breast-mass classification by Rob Calimente: how source data b
 
 The main deliverable is a Quarto case study. Four Python notebooks expose the analysis, and a shared Python package owns the computations. An interactive threshold explorer uses development predictions; the final holdout result remains fixed.
 
+![Development samples plotted by mean radius and worst concave points, showing separation and overlap between benign and malignant labels.](site/assets/sample-map.svg)
+
+The declared comparison selected logistic regression. At the development-selected threshold of 0.547828, it correctly classified 111 of 114 holdout samples. All three errors were missed malignant samples; one received an estimated malignant probability of only 6.1%.
+
+| Final holdout measure | Result |
+| --- | --- |
+| Sensitivity | 39/42 = 92.9%; 95% Wilson interval 81.0–97.5% |
+| Specificity | 72/72 = 100.0%; 95% Wilson interval 94.9–100.0% |
+| Accuracy | 111/114 = 97.4% |
+| ROC-AUC | 0.996 |
+
+The 95% development-sensitivity target did not carry over to the holdout. The report keeps that gap, every error, and the uncertainty visible. These are results on one historical benchmark, not evidence of clinical readiness.
+
 ## Read the study
 
 The six chapters cover the observation unit, source validation and lineage, exploratory analysis, model comparison, threshold tradeoffs, and final errors and uncertainty. See `index.qmd` for the generated narrative and `methods.qmd` for the full protocol.
