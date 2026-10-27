@@ -103,3 +103,5 @@ Project code and original prose: MIT; see [LICENSE](LICENSE). Third-party data a
 ## Public hosting
 
 GitHub Actions verifies the frozen analysis, executes the four notebooks, renders the six-page Quarto site, and checks local links before deploying `main` to GitHub Pages. Pull requests run the same verification without deployment.
+
+The fresh-refit check requires the same selected candidate and threshold, matching fold AUCs and development classifications, and probability agreement at `rtol=1e-8, atol=1e-9`. The unselected random forest has an explicit absolute tolerance of `0.005`: the Linux CI refit differed from the original Mac run by at most `0.003612`, with unchanged fold AUCs and classifications. This tolerance applies only to fresh development refits. The published model, predictions, and evaluation remain frozen and checked by their SHA-256 hashes.
