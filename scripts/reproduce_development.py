@@ -26,7 +26,16 @@ with tempfile.TemporaryDirectory(prefix="sample-signal-development-") as temp:
         expected = pd.read_csv(project / "reports/metrics" / name)
         actual = pd.read_csv(work / "reports/metrics" / name)
         assert expected.shape == actual.shape
+        if "model" in expected:
+            assert expected["model"].equals(actual["model"]), f"{name}: model row order changed."
+        for key in ["sample_id", "target", "fold"]:
+            if key in expected:
+                assert expected[key].equals(actual[key]), f"{name}: {key} changed."
         for column in columns:
-            assert np.allclose(expected[column], actual[column], rtol=1e-8, atol=1e-9), f"{name}: {column} changed."
+            delta = np.abs(expected[column] - actual[column])
+            for model in expected["model"].unique():
+                mask = expected["model"] == model
+                print(f"{name}: {model}: max absolute {column} difference = {delta[mask].max():.12g}", flush=True)
+            assert np.allclose(expected[column], actual[column], rtol=1e-8, atol=1e-9), f"{name}: {column} changed; max absolute difference {delta.max():.12g}."
     print("Fresh development refit agrees with the published candidate, threshold, and prediction artifacts.")
     print("No holdout observations were loaded or evaluated.")
