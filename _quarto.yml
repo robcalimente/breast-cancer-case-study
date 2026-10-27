@@ -9,6 +9,7 @@ project:
     - notebooks/03_model_selection.ipynb
     - notebooks/04_final_evaluation.ipynb
     - "!site/assets/notebooks/**"
+    - "!dist/**"
   resources:
     - site/assets/**
     - site/explorer.js
@@ -19,12 +20,13 @@ project:
     - protocol.json
     - reports/metrics/**
     - reports/manifests/**
+    - "!dist/**"
   execute-dir: project
 
 website:
   title: "From Sample to Signal"
   description: "A visual breast-mass classification study by Rob Calimente, from validated source data to a frozen model evaluation."
-  site-url: https://from-sample-to-signal.swift-clock-0959.chatgpt.site
+  site-url: https://robcalimente.github.io/breast-cancer-case-study/
   search: false
   navbar:
     title: "SAMPLE / SIGNAL"

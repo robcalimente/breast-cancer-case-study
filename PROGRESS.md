@@ -1,3 +1,9 @@
+## Public portfolio publication · 2026-10-27
+
+The approved study is being published from `robcalimente/breast-cancer-case-study` to https://robcalimente.github.io/breast-cancer-case-study/. GitHub Actions verifies the frozen analysis, executes all four notebooks, checks six rendered pages, and deploys main. The portfolio features the study second among five selected projects. The existing owner-private Sites preview remains available as a review copy.
+
+Generated `dist/` hosting output is excluded from Quarto resources to prevent recursive copies on subsequent renders. Public hosting changes do not alter the frozen model, threshold, splits, or evaluation results.
+
 # Project handoff
 
 Built October 26, 2026. This is a completed first version for visual and editorial review.

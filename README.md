@@ -1,5 +1,7 @@
 # From Sample to Signal
 
+[Read the study](https://robcalimente.github.io/breast-cancer-case-study/) · [Rob’s portfolio](https://robcalimente.github.io/#breast-cancer-study)
+
 A visual study of breast-mass classification by Rob Calimente: how source data becomes a validated table, an investigated signal, and an evaluated model decision.
 
 The main deliverable is a Quarto case study. Four Python notebooks expose the analysis, and a shared Python package owns the computations. An interactive threshold explorer uses development predictions; the final holdout result remains fixed.
@@ -97,3 +99,7 @@ Data: Wolberg, W., Mangasarian, O., Street, N., & Street, W. (1993). [Breast Can
 Subject inspiration: [Fitzpatrickmn/Machine-Learning-Cancer-Classifier](https://github.com/Fitzpatrickmn/Machine-Learning-Cancer-Classifier). This study uses an independent implementation and the original UCI source. The reference's histopathology cohort is a separate task and is not joined to this dataset or treated as a controlled modality comparison.
 
 Project code and original prose: MIT; see [LICENSE](LICENSE). Third-party data and generated package assets retain their respective licenses.
+
+## Public hosting
+
+GitHub Actions verifies the frozen analysis, executes the four notebooks, renders the six-page Quarto site, and checks local links before deploying `main` to GitHub Pages. Pull requests run the same verification without deployment.

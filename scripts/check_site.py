@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 project = Path(__file__).resolve().parents[1]
 base = project / "site/_site"
 failures = []
+assert not (base / "dist").exists(), "Generated dist directory must not be copied into the site"
 pages = sorted(base.rglob("*.html"))
 assert len(pages) == 6, f"Expected six published pages, found {len(pages)}"
 for path in pages:
