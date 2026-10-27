@@ -9,32 +9,36 @@ body-classes: study-home
 ```{=html}
 <div class="study">
   <section class="hero" aria-labelledby="study-title">
-    <div>
-      <div class="eyebrow">A data study by Rob Calimente</div>
-      <h1 id="study-title">From sample to signal.</h1>
-      <p class="hero-deck">Can measurements of cell nuclei distinguish benign from malignant breast-mass samples? Follow the work from source data to a model decision, including the mistakes.</p>
-
-      <p class="hero-note">Python + SQL · Data engineering, analysis, and data science</p>
+    <div class="hero-opening">
+      <p class="eyebrow">From sample to signal <span>A study by Rob Calimente</span></p>
+      <p class="subject-line">Breast cancer classification / Python + SQL</p>
+      <h1 id="study-title">What does<br>a model <em>miss?</em></h1>
+      <p class="hero-deck">Thirty cell measurements can carry a strong signal about a breast mass. This study follows that signal from source data to a model’s decisions.</p>
     </div>
-
+    <figure class="outcome-map">
+      <picture><source media="(max-width: 600px)" srcset="site/assets/holdout-outcomes-mobile.svg"><img src="site/assets/holdout-outcomes.svg" width="788" height="202" alt="114 held-out breast-mass samples: 111 correct classifications and 3 malignant samples missed. Filled blue-green dots are correct; rust rings are missed malignant samples." fetchpriority="high"></picture>
+      <figcaption><span class="outcome-key"><i class="correct-key" aria-hidden="true"></i><strong>111</strong> correctly classified</span><span class="outcome-key"><i class="missed-key" aria-hidden="true"></i><strong>3</strong> malignant samples missed</span><span class="outcome-map-note">One mark per holdout sample · Source row order</span></figcaption>
+    </figure>
+    <div class="hero-invitation"><p>The model got 111 of 114 reserved samples right. The 3 it missed deserve a closer look. To understand those decisions, start with the data.</p><a class="begin-link" href="#source">Follow the evidence <span aria-hidden="true">↓</span></a></div>
   </section>
 
   <nav class="study-index" aria-label="Study chapters">
-    <p>In this study</p>
-    <ol>
-      <li><a href="#source">Understand the sample</a></li>
-      <li><a href="#pipeline">Establish trust in the data</a></li>
-      <li><a href="#exploration">Investigate the signal</a></li>
-      <li><a href="#models">Choose a model</a></li>
-      <li><a href="#decisions">Explore the decision threshold</a></li>
-      <li><a href="#evaluation">Evaluate the result and its limits</a></li>
-    </ol>
+    <details><summary>Six chapters, from sample to conclusion</summary>
+      <ol>
+        <li><a href="#source">Understand the sample</a></li>
+        <li><a href="#pipeline">Establish trust in the data</a></li>
+        <li><a href="#exploration">Investigate the signal</a></li>
+        <li><a href="#models">Choose a model</a></li>
+        <li><a href="#decisions">Explore the decision threshold</a></li>
+        <li><a href="#evaluation">Evaluate the result and its limits</a></li>
+      </ol>
+    </details>
   </nav>
 
   <section class="chapter" id="source" aria-labelledby="source-title">
-    <div class="chapter-label">01 / The sample</div>
+    <div class="chapter-label"><span class="chapter-number">01</span><span class="chapter-name">The sample</span></div>
     <div class="chapter-intro">
-      <h2 id="source-title">Start with what a row really means.</h2>
+      <h2 id="source-title">A breast mass, measured thirty ways.</h2>
       <p>These are measurements of cell nuclei, computed from digitized fine needle aspirate images of breast masses. The question is specific: can those measurements distinguish samples labeled benign from samples labeled malignant?</p>
     </div>
     <p class="dataset-summary"><strong>569 samples</strong> · <strong>30 measurements</strong> · <strong>2 diagnosis classes</strong></p>
@@ -47,28 +51,23 @@ body-classes: study-home
       </dl>
     </div>
     <figure class="figure-wide source-figure">
-      <img src="site/assets/sample-map.svg" alt="455 development samples plotted by mean radius and worst concave points. Teal benign circles and amber malignant triangles show separation with overlap." width="720" height="570" fetchpriority="high">
+      <img src="site/assets/sample-map.svg" alt="455 development samples plotted by mean radius and worst concave points. Teal benign circles and amber malignant triangles show separation with overlap." width="720" height="570" loading="lazy">
       <figcaption>Two of thirty measurements. Each mark is one breast-mass sample; color and shape show the recorded diagnosis.</figcaption>
     </figure>
     <p class="small">Source: <a href="https://archive.ics.uci.edu/dataset/17/breast+cancer+wisconsin+diagnostic">UCI Wisconsin Diagnostic Breast Cancer</a> · 357 benign / 212 malignant · Donated in 1995 · CC BY 4.0. These observations concern sampled masses, not future cancer risk.</p>
   </section>
 
   <section class="chapter" id="pipeline" aria-labelledby="pipeline-title">
-    <div class="chapter-label">02 / The pipeline</div>
+    <div class="chapter-label"><span class="chapter-number">02</span><span class="chapter-name">The pipeline</span></div>
     <div class="chapter-intro">
       <h2 id="pipeline-title">Establish trust before finding patterns.</h2>
       <p>A small dataset still needs a reliable path from source to analysis. Source bytes are preserved, checked against a recorded SHA-256 hash, validated against an explicit schema, and transformed into Parquet tables.</p>
     </div>
-    <div class="table-scroll"><table class="pipeline-table">
-      <caption>The route from source data to evaluation</caption>
-      <thead><tr><th scope="col">Step</th><th scope="col">Result</th><th scope="col">Purpose</th></tr></thead>
-      <tbody>
-        <tr><th scope="row">Source snapshot</th><td>569 rows</td><td>Preserve the original UCI data, including ID and label.</td></tr>
-        <tr><th scope="row">Validate</th><td>9 checks passed</td><td>Check schema, labels, missing values, duplicates, and measurement validity.</td></tr>
-        <tr><th scope="row">Development</th><td>455 samples</td><td>Explore the data, compare models, and select a threshold.</td></tr>
-        <tr><th scope="row">Holdout</th><td>114 samples</td><td>Evaluate after the model and threshold are frozen.</td></tr>
-      </tbody>
-    </table></div>
+    <ol class="pipeline-route" aria-label="Data preparation and evaluation split">
+      <li><span class="route-number" aria-hidden="true">1</span><div><h3>Preserve the source.</h3><p><strong>569 rows</strong>, retained as the original UCI snapshot. A recorded checksum identifies the accepted bytes.</p></div></li>
+      <li><span class="route-number" aria-hidden="true">2</span><div><h3>Validate the observations.</h3><p><strong>9 checks passed.</strong> The contract covers schema, labels, missing values, duplicates, and measurement validity.</p></div></li>
+      <li><span class="route-number" aria-hidden="true">3</span><div><h3>Reserve the final evidence.</h3><p><strong>455 development samples</strong> support exploration and model choices. Another <strong>114 samples</strong> are held back until the model and threshold are frozen.</p></div></li>
+    </ol>
     <div class="engineering-notes">
       <div><h3>Clean data is a finding.</h3><p>The source passed the checks. There were no missing values to impute or duplicate rows to remove. Invalid labels, schema changes, and non-finite measurements are rejected; labeled test fixtures verify that behavior.</p></div>
       <div><h3>Every result has a route back.</h3><p>The pipeline saves source and artifact hashes, split assignments, SQL summaries, a model freeze, and an evaluation record. Reruns verify the frozen study and reuse its final results.</p></div>
@@ -81,7 +80,7 @@ GROUP BY diagnosis;</pre><p class="small">DuckDB queries the validated table dir
   </section>
 
   <section class="chapter" id="exploration" aria-labelledby="exploration-title">
-    <div class="chapter-label">03 / The signal</div>
+    <div class="chapter-label"><span class="chapter-number">03</span><span class="chapter-name">The signal</span></div>
     <div class="chapter-intro"><h2 id="exploration-title">Separation is useful. Overlap matters too.</h2><p>Class distributions differ, but a single measurement does not settle every case. These figures use only the 455 development samples; the holdout does not guide exploratory choices.</p></div>
     <figure class="figure-wide"><picture><source media="(max-width: 600px)" srcset="site/assets/distributions-mobile.svg"><img src="site/assets/distributions.svg" loading="lazy" alt="Development distributions of mean radius, mean texture, and worst concave points, with different class medians and overlapping ranges."></picture><figcaption>Class distributions on the development partition. Vertical lines mark medians; density curves are descriptive smoothing. Measurements stay on the source scale because physical units are not established in the data dictionary.</figcaption></figure>
     <div class="eda-detail">
@@ -95,7 +94,7 @@ GROUP BY diagnosis;</pre><p class="small">DuckDB queries the validated table dir
   </section>
 
   <section class="chapter model-section" id="models" aria-labelledby="model-title">
-    <div class="chapter-label">04 / The model</div>
+    <div class="chapter-label"><span class="chapter-number">04</span><span class="chapter-name">The model</span></div>
     <div class="chapter-intro"><h2 id="model-title">Let complexity earn its place.</h2><p>A majority-class baseline, logistic regression, a calibrated RBF SVM, and a random forest share the same five validation folds. Candidate settings and the selection rule were recorded before training.</p></div>
     <div class="model-results">
       <p>The declared rule selected <strong>Logistic regression</strong>: the simplest candidate within 0.005 ROC-AUC of the best mean validation score. Its mean validation ROC-AUC was <strong>0.996</strong>, with a fold standard deviation of 0.004.</p>
@@ -106,7 +105,7 @@ GROUP BY diagnosis;</pre><p class="small">DuckDB queries the validated table dir
   </section>
 
   <section class="chapter" id="decisions" aria-labelledby="decision-title">
-    <div class="chapter-label">05 / The tradeoff</div>
+    <div class="chapter-label"><span class="chapter-number">05</span><span class="chapter-name">The tradeoff</span></div>
     <div class="chapter-intro"><h2 id="decision-title">A probability still needs a decision.</h2><p>Lowering the threshold flags more samples as malignant. That can catch more malignant samples while also flagging more benign ones. Move the threshold to see both sides of the tradeoff.</p></div>
     <div class="explorer" id="threshold-explorer">
       <div class="explorer-top"><div class="chart-label">Development predictions · 455 samples</div><button id="reset-threshold" type="button" disabled>Use development choice ↺</button></div>
@@ -124,8 +123,8 @@ GROUP BY diagnosis;</pre><p class="small">DuckDB queries the validated table dir
   </section>
 
   <section class="chapter" id="evaluation" aria-labelledby="evaluation-title">
-    <div class="chapter-label">06 / The evidence</div>
-    <div class="chapter-intro"><h2 id="evaluation-title">Now ask it about unseen samples.</h2><p>The selected pipeline was fitted on development data and evaluated on 114 reserved samples at the frozen threshold. The result: 111 correct classifications, 3 missed malignant samples, and 0 benign samples flagged.</p></div>
+    <div class="chapter-label"><span class="chapter-number">06</span><span class="chapter-name">The evidence</span></div>
+    <div class="chapter-intro"><h2 id="evaluation-title">The three samples it missed.</h2><p>The selected pipeline was fitted on development data and evaluated on 114 reserved samples at the frozen threshold. The result: 111 correct classifications, 3 missed malignant samples, and 0 benign samples flagged.</p></div>
     <figure class="figure-wide confusion-figure"><img src="site/assets/holdout-confusion.svg" loading="lazy" alt="Final holdout confusion matrix: 72 true negatives, 0 false positives, 3 false negatives, and 39 true positives."><figcaption>Observed diagnosis versus prediction · Malignant = positive. The holdout contains 42 malignant and 72 benign samples.</figcaption></figure>
     <div class="table-scroll"><table class="results-table">
       <caption>Performance at the frozen threshold</caption>
@@ -140,13 +139,13 @@ GROUP BY diagnosis;</pre><p class="small">DuckDB queries the validated table dir
     </table></div>
     <p class="small">Sensitivity and specificity use Wilson intervals. They reflect finite holdout counts conditional on this fitted model, not the full development process or performance at another institution. ROC-AUC measures ranking independently of the chosen threshold.</p>
     <p class="small">The illustrative 95% development-sensitivity target was not reached on this holdout: sensitivity was 92.9%. A development target is not a guarantee for unseen samples.</p>
-    <div class="errors"><h3>The mistakes stay in the story.</h3><p class="small">Every misclassified holdout sample is listed below. These observations were inspected after final evaluation; no model or threshold revision followed. The lowest estimated malignant probability among the missed malignant samples was 6.1%. A low score did not rule out a malignant label.</p><table><caption>All 3 misclassified holdout samples, at the frozen threshold.</caption><thead><tr><th scope="col">Sample ID</th><th scope="col">Observed</th><th scope="col">Predicted</th><th scope="col">P(malignant)</th></tr></thead><tbody><tr><td><code>859983</code></td><td>Malignant</td><td>Benign</td><td>0.0614</td></tr><tr><td><code>874858</code></td><td>Malignant</td><td>Benign</td><td>0.3145</td></tr><tr><td><code>879523</code></td><td>Malignant</td><td>Benign</td><td>0.4916</td></tr></tbody></table></div>
+    <div class="errors"><h3>The mistakes stay in the story.</h3><p class="small">Every misclassified holdout sample is listed below. These observations were inspected after final evaluation; no model or threshold revision followed.</p><aside class="error-finding" aria-label="A missed malignant sample with a low model score"><span class="finding-label">One of the missed samples</span><strong>6.1%</strong><p>The estimated probability of malignancy for the lowest-scored missed malignant sample. A low model score was still wrong.</p></aside><table><caption>All 3 misclassified holdout samples, at the frozen threshold.</caption><thead><tr><th scope="col">Sample ID</th><th scope="col">Observed</th><th scope="col">Predicted</th><th scope="col">P(malignant)</th></tr></thead><tbody><tr><td><code>859983</code></td><td>Malignant</td><td>Benign</td><td>0.0614</td></tr><tr><td><code>874858</code></td><td>Malignant</td><td>Benign</td><td>0.3145</td></tr><tr><td><code>879523</code></td><td>Malignant</td><td>Benign</td><td>0.4916</td></tr></tbody></table></div>
     <details><summary>Check probability quality as well as ranking</summary><figure class="figure-wide"><img src="site/assets/calibration.svg" loading="lazy" alt="Holdout calibration in five quantile bins and estimated probability histograms by observed diagnosis."><figcaption>The calibration curve is descriptive and uncertain with only 114 samples. Brier score: 0.0213; lower is better. No calibration was fitted on the holdout.</figcaption></figure></details>
     <a class="text-link" href="notebooks/04_final_evaluation.html">Read the final evaluation →</a>
   </section>
 
   <section class="chapter conclusion" aria-labelledby="conclusion-title">
-    <div><div class="chapter-label">What the study supports</div><h2 id="conclusion-title">A useful result. A bounded claim.</h2><p>The measurements contain a strong signal for the recorded diagnosis in this benchmark. The frozen logistic regression pipeline detected 39 of 42 malignant holdout samples and correctly cleared 72 of 72 benign ones.</p><p>The full result includes the source, the decisions, the mistakes, and the uncertainty. Those are the parts that make the work assessable and reproducible.</p><a class="text-link" href="methods.html">Read the protocol & methods →</a></div>
+    <div><div class="chapter-label conclusion-label">What the study supports</div><h2 id="conclusion-title">A useful result. A bounded claim.</h2><p>The measurements contain a strong signal for the recorded diagnosis in this benchmark. The frozen logistic regression pipeline detected 39 of 42 malignant holdout samples and correctly cleared 72 of 72 benign ones.</p><p>The full result includes the source, the decisions, the mistakes, and the uncertainty. Those are the parts that make the work assessable and reproducible.</p><a class="text-link" href="methods.html">Read the protocol & methods →</a></div>
     <ul class="limits"><li><b>A historical benchmark</b>A random split within one dataset does not establish performance on another hospital, collection process, or time period.</li><li><b>A specific observation unit</b>These are sampled breast masses. The analysis does not establish future-risk prediction or population-screening performance.</li><li><b>Limited metadata</b>The supplied table does not support an assessment of performance across demographic groups or institutions.</li><li><b>A next study, with new evidence</b>External validation would need compatible measurements and independent samples. Any model revision would require new evaluation evidence.</li></ul>
   </section>
 

@@ -7,9 +7,11 @@ import pandas as pd
 
 from .common import digest, read_json, write_json
 from .evaluate import metrics
+from .story_assets import write_outcome_maps
 
 
 def build_report_sources(project: Path, quality: dict, development: pd.DataFrame, final: dict) -> None:
+    write_outcome_maps(project)
     directory = project / "reports/metrics"
     freeze = read_json(directory / "freeze.json")
     cv = pd.read_csv(directory / "cross_validation.csv")
@@ -41,6 +43,7 @@ def build_report_sources(project: Path, quality: dict, development: pd.DataFrame
         "SENS_CI": interval(final["sensitivity_wilson_95"]), "SPEC_CI": interval(final["specificity_wilson_95"]),
         "ERROR_TABLE": table, "BRIER": f"{final['brier_score']:.4f}",
         "ERROR_OBSERVATION": error_observation,
+        "LOWEST_MISSED_PROBABILITY": f"{100 * missed.probability_malignant.min():.1f}%" if len(missed) else "—",
         "TARGET_COMPARISON": f"The illustrative 95% development-sensitivity target {'was not reached' if final['sensitivity'] < .95 else 'was reached'} on this holdout: sensitivity was {percent(final['sensitivity'])}. A development target is not a guarantee for unseen samples.",
         "SOURCE_SHORT": digest(project / "data/raw/wdbc.data")[:20],
     }

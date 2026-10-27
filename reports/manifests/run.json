@@ -1,6 +1,6 @@
 {
-  "generated_at_utc": "2026-10-26T20:31:43.927807+00:00",
-  "code_revision": "8dd96e65a3ce9abeae6a6604f67684147bd53ce6",
+  "generated_at_utc": "2026-10-27T14:19:55.323469+00:00",
+  "code_revision": "1cac4fb3b4512174a351e41a70ca075733d29900",
   "working_tree_has_changes": true,
   "source_sha256": "d606af411f3e5be8a317a5a8b652b425aaf0ff38ca683d5327ffff94c3695f4a",
   "training_fingerprint": "2798a592c45431e2e5f20ecfee38e5d6baf8a13bfc2227bc7211124e67733e71",
@@ -42,7 +42,8 @@
     "src/cancer_study/evaluate.py": "a9e53732e89eb277bddaafafa84b1a7a923dcc33e2f8a3caa0e252a2c2f23132",
     "src/cancer_study/ingest.py": "f599fc5647e0bc30051cd03815ac989b4e2ebd92b13b9e9324ff9148296e2a2e",
     "src/cancer_study/plots.py": "069bb3638f790a13dd377c2f9e68ea7fd15b01c6a2983e8ec6fac27e3a8955d6",
-    "src/cancer_study/publish.py": "5b9dc1629c985521e603c7a3583eb9cf03ceabaebb93071ad95a3835c033b3ec",
+    "src/cancer_study/publish.py": "b982f1d66734dd29224083a79ffe55d36f03b56f4abd5a748a33587aea23fb07",
+    "src/cancer_study/story_assets.py": "10688d951d7fc8167d50970db87a9b281ccfa60a8cef59cf1043ec14c4486f34",
     "src/cancer_study/train.py": "db1f49d9626c3255e8cad39545b8a3c0488f8233d128ad1f2ac6d69da732bc51",
     "uv.lock": "d3161dcca71c3e1354c8b722b29d519ea4f1cff7c0a6c10840391703d66cda54"
   }

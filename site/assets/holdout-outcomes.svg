@@ -1,0 +1,463 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 788 202" role="img" aria-labelledby="outcomes-title outcomes-description">
+<title id="outcomes-title">111 correct classifications and 3 errors across 114 holdout samples</title>
+<desc id="outcomes-description">One marker per held-out breast-mass sample, in source row order. Filled blue-green dots mark correct classifications. Rust rings mark malignant samples classified as benign.</desc>
+<g data-sample-id="84358402" data-outcome="correct">
+<title>Sample 84358402: correct; estimated malignant probability 0.9999</title>
+<circle cx="16" cy="16" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="843786" data-outcome="correct">
+<title>Sample 843786: correct; estimated malignant probability 0.8833</title>
+<circle cx="58" cy="16" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="84458202" data-outcome="correct">
+<title>Sample 84458202: correct; estimated malignant probability 0.9541</title>
+<circle cx="100" cy="16" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="84667401" data-outcome="correct">
+<title>Sample 84667401: correct; estimated malignant probability 0.9018</title>
+<circle cx="142" cy="16" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="8510653" data-outcome="correct">
+<title>Sample 8510653: correct; estimated malignant probability 0.0022</title>
+<circle cx="184" cy="16" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="8511133" data-outcome="correct">
+<title>Sample 8511133: correct; estimated malignant probability 0.9909</title>
+<circle cx="226" cy="16" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="854039" data-outcome="correct">
+<title>Sample 854039: correct; estimated malignant probability 0.9983</title>
+<circle cx="268" cy="16" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="855138" data-outcome="correct">
+<title>Sample 855138: correct; estimated malignant probability 0.7615</title>
+<circle cx="310" cy="16" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="858970" data-outcome="correct">
+<title>Sample 858970: correct; estimated malignant probability 0.0001</title>
+<circle cx="352" cy="16" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="85922302" data-outcome="correct">
+<title>Sample 85922302: correct; estimated malignant probability 0.9966</title>
+<circle cx="394" cy="16" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="859575" data-outcome="correct">
+<title>Sample 859575: correct; estimated malignant probability 1.0000</title>
+<circle cx="436" cy="16" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="859711" data-outcome="correct">
+<title>Sample 859711: correct; estimated malignant probability 0.0000</title>
+<circle cx="478" cy="16" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="859983" data-outcome="missed-malignant">
+<title>Sample 859983: missed-malignant; estimated malignant probability 0.0614</title>
+<circle cx="520" cy="16" r="11" fill="none" stroke="#b94e41" stroke-width="2.5"/>
+<circle cx="520" cy="16" r="3" fill="#b94e41"/>
+</g>
+<g data-sample-id="8610175" data-outcome="correct">
+<title>Sample 8610175: correct; estimated malignant probability 0.0020</title>
+<circle cx="562" cy="16" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="8610404" data-outcome="correct">
+<title>Sample 8610404: correct; estimated malignant probability 0.9993</title>
+<circle cx="604" cy="16" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="8611792" data-outcome="correct">
+<title>Sample 8611792: correct; estimated malignant probability 0.9985</title>
+<circle cx="646" cy="16" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="86135501" data-outcome="correct">
+<title>Sample 86135501: correct; estimated malignant probability 0.7576</title>
+<circle cx="688" cy="16" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="862028" data-outcome="correct">
+<title>Sample 862028: correct; estimated malignant probability 0.9954</title>
+<circle cx="730" cy="16" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="862485" data-outcome="correct">
+<title>Sample 862485: correct; estimated malignant probability 0.0006</title>
+<circle cx="772" cy="16" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="862548" data-outcome="correct">
+<title>Sample 862548: correct; estimated malignant probability 0.5762</title>
+<circle cx="16" cy="50" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="862717" data-outcome="correct">
+<title>Sample 862717: correct; estimated malignant probability 0.9692</title>
+<circle cx="58" cy="50" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="86408" data-outcome="correct">
+<title>Sample 86408: correct; estimated malignant probability 0.0108</title>
+<circle cx="100" cy="50" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="864726" data-outcome="correct">
+<title>Sample 864726: correct; estimated malignant probability 0.0000</title>
+<circle cx="142" cy="50" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="864877" data-outcome="correct">
+<title>Sample 864877: correct; estimated malignant probability 1.0000</title>
+<circle cx="184" cy="50" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="865137" data-outcome="correct">
+<title>Sample 865137: correct; estimated malignant probability 0.0004</title>
+<circle cx="226" cy="50" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="865432" data-outcome="correct">
+<title>Sample 865432: correct; estimated malignant probability 0.0237</title>
+<circle cx="268" cy="50" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="86561" data-outcome="correct">
+<title>Sample 86561: correct; estimated malignant probability 0.0019</title>
+<circle cx="310" cy="50" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="866458" data-outcome="correct">
+<title>Sample 866458: correct; estimated malignant probability 0.0937</title>
+<circle cx="352" cy="50" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="866714" data-outcome="correct">
+<title>Sample 866714: correct; estimated malignant probability 0.0005</title>
+<circle cx="394" cy="50" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="868871" data-outcome="correct">
+<title>Sample 868871: correct; estimated malignant probability 0.0001</title>
+<circle cx="436" cy="50" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="8711002" data-outcome="correct">
+<title>Sample 8711002: correct; estimated malignant probability 0.0733</title>
+<circle cx="478" cy="50" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="871201" data-outcome="correct">
+<title>Sample 871201: correct; estimated malignant probability 1.0000</title>
+<circle cx="520" cy="50" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="8712853" data-outcome="correct">
+<title>Sample 8712853: correct; estimated malignant probability 0.0139</title>
+<circle cx="562" cy="50" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="87281702" data-outcome="correct">
+<title>Sample 87281702: correct; estimated malignant probability 0.9891</title>
+<circle cx="604" cy="50" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="873586" data-outcome="correct">
+<title>Sample 873586: correct; estimated malignant probability 0.0001</title>
+<circle cx="646" cy="50" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="873843" data-outcome="correct">
+<title>Sample 873843: correct; estimated malignant probability 0.0000</title>
+<circle cx="688" cy="50" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="874662" data-outcome="correct">
+<title>Sample 874662: correct; estimated malignant probability 0.0011</title>
+<circle cx="730" cy="50" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="874858" data-outcome="missed-malignant">
+<title>Sample 874858: missed-malignant; estimated malignant probability 0.3145</title>
+<circle cx="772" cy="50" r="11" fill="none" stroke="#b94e41" stroke-width="2.5"/>
+<circle cx="772" cy="50" r="3" fill="#b94e41"/>
+</g>
+<g data-sample-id="875938" data-outcome="correct">
+<title>Sample 875938: correct; estimated malignant probability 0.9985</title>
+<circle cx="16" cy="84" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="877486" data-outcome="correct">
+<title>Sample 877486: correct; estimated malignant probability 0.9998</title>
+<circle cx="58" cy="84" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="879523" data-outcome="missed-malignant">
+<title>Sample 879523: missed-malignant; estimated malignant probability 0.4916</title>
+<circle cx="100" cy="84" r="11" fill="none" stroke="#b94e41" stroke-width="2.5"/>
+<circle cx="100" cy="84" r="3" fill="#b94e41"/>
+</g>
+<g data-sample-id="879830" data-outcome="correct">
+<title>Sample 879830: correct; estimated malignant probability 0.9880</title>
+<circle cx="142" cy="84" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="8810158" data-outcome="correct">
+<title>Sample 8810158: correct; estimated malignant probability 0.2218</title>
+<circle cx="184" cy="84" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="8811523" data-outcome="correct">
+<title>Sample 8811523: correct; estimated malignant probability 0.0101</title>
+<circle cx="226" cy="84" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="8811842" data-outcome="correct">
+<title>Sample 8811842: correct; estimated malignant probability 1.0000</title>
+<circle cx="268" cy="84" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="88119002" data-outcome="correct">
+<title>Sample 88119002: correct; estimated malignant probability 1.0000</title>
+<circle cx="310" cy="84" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="8812818" data-outcome="correct">
+<title>Sample 8812818: correct; estimated malignant probability 0.0078</title>
+<circle cx="352" cy="84" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="8812844" data-outcome="correct">
+<title>Sample 8812844: correct; estimated malignant probability 0.0002</title>
+<circle cx="394" cy="84" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="884437" data-outcome="correct">
+<title>Sample 884437: correct; estimated malignant probability 0.0102</title>
+<circle cx="436" cy="84" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="884948" data-outcome="correct">
+<title>Sample 884948: correct; estimated malignant probability 1.0000</title>
+<circle cx="478" cy="84" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="8910720" data-outcome="correct">
+<title>Sample 8910720: correct; estimated malignant probability 0.0004</title>
+<circle cx="520" cy="84" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="8911164" data-outcome="correct">
+<title>Sample 8911164: correct; estimated malignant probability 0.0335</title>
+<circle cx="562" cy="84" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="8911670" data-outcome="correct">
+<title>Sample 8911670: correct; estimated malignant probability 0.9739</title>
+<circle cx="604" cy="84" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="8912049" data-outcome="correct">
+<title>Sample 8912049: correct; estimated malignant probability 1.0000</title>
+<circle cx="646" cy="84" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="89122" data-outcome="correct">
+<title>Sample 89122: correct; estimated malignant probability 1.0000</title>
+<circle cx="688" cy="84" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="891716" data-outcome="correct">
+<title>Sample 891716: correct; estimated malignant probability 0.0001</title>
+<circle cx="730" cy="84" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="891936" data-outcome="correct">
+<title>Sample 891936: correct; estimated malignant probability 0.0000</title>
+<circle cx="772" cy="84" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="893526" data-outcome="correct">
+<title>Sample 893526: correct; estimated malignant probability 0.0001</title>
+<circle cx="16" cy="118" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="893548" data-outcome="correct">
+<title>Sample 893548: correct; estimated malignant probability 0.0003</title>
+<circle cx="58" cy="118" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="894047" data-outcome="correct">
+<title>Sample 894047: correct; estimated malignant probability 0.0000</title>
+<circle cx="100" cy="118" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="894329" data-outcome="correct">
+<title>Sample 894329: correct; estimated malignant probability 0.0006</title>
+<circle cx="142" cy="118" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="894618" data-outcome="correct">
+<title>Sample 894618: correct; estimated malignant probability 0.9997</title>
+<circle cx="184" cy="118" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="89511502" data-outcome="correct">
+<title>Sample 89511502: correct; estimated malignant probability 0.0016</title>
+<circle cx="226" cy="118" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="895633" data-outcome="correct">
+<title>Sample 895633: correct; estimated malignant probability 0.8854</title>
+<circle cx="268" cy="118" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="898677" data-outcome="correct">
+<title>Sample 898677: correct; estimated malignant probability 0.0000</title>
+<circle cx="310" cy="118" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="898678" data-outcome="correct">
+<title>Sample 898678: correct; estimated malignant probability 0.0018</title>
+<circle cx="352" cy="118" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="89869" data-outcome="correct">
+<title>Sample 89869: correct; estimated malignant probability 0.0932</title>
+<circle cx="394" cy="118" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="898690" data-outcome="correct">
+<title>Sample 898690: correct; estimated malignant probability 0.0007</title>
+<circle cx="436" cy="118" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="899147" data-outcome="correct">
+<title>Sample 899147: correct; estimated malignant probability 0.0001</title>
+<circle cx="478" cy="118" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="9010598" data-outcome="correct">
+<title>Sample 9010598: correct; estimated malignant probability 0.0036</title>
+<circle cx="520" cy="118" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="9012568" data-outcome="correct">
+<title>Sample 9012568: correct; estimated malignant probability 0.0010</title>
+<circle cx="562" cy="118" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="901303" data-outcome="correct">
+<title>Sample 901303: correct; estimated malignant probability 0.0426</title>
+<circle cx="604" cy="118" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="901836" data-outcome="correct">
+<title>Sample 901836: correct; estimated malignant probability 0.0001</title>
+<circle cx="646" cy="118" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="90251" data-outcome="correct">
+<title>Sample 90251: correct; estimated malignant probability 0.0023</title>
+<circle cx="688" cy="118" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="90291" data-outcome="correct">
+<title>Sample 90291: correct; estimated malignant probability 0.8523</title>
+<circle cx="730" cy="118" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="902976" data-outcome="correct">
+<title>Sample 902976: correct; estimated malignant probability 0.0005</title>
+<circle cx="772" cy="118" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="903516" data-outcome="correct">
+<title>Sample 903516: correct; estimated malignant probability 1.0000</title>
+<circle cx="16" cy="152" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="905502" data-outcome="correct">
+<title>Sample 905502: correct; estimated malignant probability 0.0521</title>
+<circle cx="58" cy="152" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="905520" data-outcome="correct">
+<title>Sample 905520: correct; estimated malignant probability 0.0025</title>
+<circle cx="100" cy="152" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="906024" data-outcome="correct">
+<title>Sample 906024: correct; estimated malignant probability 0.0003</title>
+<circle cx="142" cy="152" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="906539" data-outcome="correct">
+<title>Sample 906539: correct; estimated malignant probability 0.0044</title>
+<circle cx="184" cy="152" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="90769601" data-outcome="correct">
+<title>Sample 90769601: correct; estimated malignant probability 0.0000</title>
+<circle cx="226" cy="152" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="90769602" data-outcome="correct">
+<title>Sample 90769602: correct; estimated malignant probability 0.0004</title>
+<circle cx="268" cy="152" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="908445" data-outcome="correct">
+<title>Sample 908445: correct; estimated malignant probability 1.0000</title>
+<circle cx="310" cy="152" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="909231" data-outcome="correct">
+<title>Sample 909231: correct; estimated malignant probability 0.0138</title>
+<circle cx="352" cy="152" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="909411" data-outcome="correct">
+<title>Sample 909411: correct; estimated malignant probability 0.0106</title>
+<circle cx="394" cy="152" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="9110944" data-outcome="correct">
+<title>Sample 9110944: correct; estimated malignant probability 0.0668</title>
+<circle cx="436" cy="152" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="911150" data-outcome="correct">
+<title>Sample 911150: correct; estimated malignant probability 0.1156</title>
+<circle cx="478" cy="152" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="9111805" data-outcome="correct">
+<title>Sample 9111805: correct; estimated malignant probability 1.0000</title>
+<circle cx="520" cy="152" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="9112085" data-outcome="correct">
+<title>Sample 9112085: correct; estimated malignant probability 0.5092</title>
+<circle cx="562" cy="152" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="9112366" data-outcome="correct">
+<title>Sample 9112366: correct; estimated malignant probability 0.2351</title>
+<circle cx="604" cy="152" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="9112712" data-outcome="correct">
+<title>Sample 9112712: correct; estimated malignant probability 0.0013</title>
+<circle cx="646" cy="152" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="911320502" data-outcome="correct">
+<title>Sample 911320502: correct; estimated malignant probability 0.0071</title>
+<circle cx="688" cy="152" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="9113538" data-outcome="correct">
+<title>Sample 9113538: correct; estimated malignant probability 0.9996</title>
+<circle cx="730" cy="152" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="911916" data-outcome="correct">
+<title>Sample 911916: correct; estimated malignant probability 0.9309</title>
+<circle cx="772" cy="152" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="912558" data-outcome="correct">
+<title>Sample 912558: correct; estimated malignant probability 0.0152</title>
+<circle cx="16" cy="186" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="913505" data-outcome="correct">
+<title>Sample 913505: correct; estimated malignant probability 1.0000</title>
+<circle cx="58" cy="186" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="91505" data-outcome="correct">
+<title>Sample 91505: correct; estimated malignant probability 0.0108</title>
+<circle cx="100" cy="186" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="915143" data-outcome="correct">
+<title>Sample 915143: correct; estimated malignant probability 1.0000</title>
+<circle cx="142" cy="186" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="915276" data-outcome="correct">
+<title>Sample 915276: correct; estimated malignant probability 0.0001</title>
+<circle cx="184" cy="186" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="91544001" data-outcome="correct">
+<title>Sample 91544001: correct; estimated malignant probability 0.0043</title>
+<circle cx="226" cy="186" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="915664" data-outcome="correct">
+<title>Sample 915664: correct; estimated malignant probability 0.0024</title>
+<circle cx="268" cy="186" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="91789" data-outcome="correct">
+<title>Sample 91789: correct; estimated malignant probability 0.0001</title>
+<circle cx="310" cy="186" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="918192" data-outcome="correct">
+<title>Sample 918192: correct; estimated malignant probability 0.0152</title>
+<circle cx="352" cy="186" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="918465" data-outcome="correct">
+<title>Sample 918465: correct; estimated malignant probability 0.0011</title>
+<circle cx="394" cy="186" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="91930402" data-outcome="correct">
+<title>Sample 91930402: correct; estimated malignant probability 1.0000</title>
+<circle cx="436" cy="186" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="919537" data-outcome="correct">
+<title>Sample 919537: correct; estimated malignant probability 0.0004</title>
+<circle cx="478" cy="186" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="923169" data-outcome="correct">
+<title>Sample 923169: correct; estimated malignant probability 0.0002</title>
+<circle cx="520" cy="186" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="924342" data-outcome="correct">
+<title>Sample 924342: correct; estimated malignant probability 0.0000</title>
+<circle cx="562" cy="186" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="924632" data-outcome="correct">
+<title>Sample 924632: correct; estimated malignant probability 0.0757</title>
+<circle cx="604" cy="186" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="924964" data-outcome="correct">
+<title>Sample 924964: correct; estimated malignant probability 0.0000</title>
+<circle cx="646" cy="186" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="925292" data-outcome="correct">
+<title>Sample 925292: correct; estimated malignant probability 0.2005</title>
+<circle cx="688" cy="186" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="926125" data-outcome="correct">
+<title>Sample 926125: correct; estimated malignant probability 1.0000</title>
+<circle cx="730" cy="186" r="7" fill="#467e85"/>
+</g>
+<g data-sample-id="92751" data-outcome="correct">
+<title>Sample 92751: correct; estimated malignant probability 0.0001</title>
+<circle cx="772" cy="186" r="7" fill="#467e85"/>
+</g>
+</svg>
