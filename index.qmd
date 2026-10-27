@@ -140,7 +140,7 @@ GROUP BY diagnosis;</pre><p class="small">DuckDB queries the validated table dir
 
   <section class="chapter model-section" id="models" aria-labelledby="model-title">
     <div class="chapter-label"><span class="chapter-number">04</span><span class="chapter-name">The model</span></div>
-    <div class="chapter-intro"><h2 id="model-title">The choice: logistic regression.</h2><p><strong>It was the simplest candidate and had the highest average validation score.</strong> The more complex alternatives did not improve that score, so I kept the simpler model.</p></div>
+    <div class="chapter-intro"><h2 id="model-title">The choice: logistic regression.</h2><p><strong>It had the highest average validation score.</strong> The more complex alternatives did not improve that score, so I kept the simpler model.</p></div>
     <div class="model-results">
       <table class="model-choice-table">
         <caption>Average ROC-AUC across the five development folds · Higher is better</caption>
