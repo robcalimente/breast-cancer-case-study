@@ -1,6 +1,6 @@
 ## Public portfolio publication · 2026-10-27
 
-The approved study is being published from `robcalimente/breast-cancer-case-study` to https://robcalimente.github.io/breast-cancer-case-study/. GitHub Actions verifies the frozen analysis, executes all four notebooks, checks six rendered pages, and deploys main. The portfolio features the study second among five selected projects. The existing owner-private Sites preview remains available as a review copy.
+The approved study is published from `robcalimente/breast-cancer-case-study` to https://robcalimente.github.io/breast-cancer-case-study/. GitHub Actions verifies the frozen analysis, executes all four notebooks, checks six rendered pages, and deploys main. The portfolio features the study second among five selected projects. The existing owner-private Sites preview remains available as a review copy.
 
 Generated `dist/` hosting output is excluded from Quarto resources to prevent recursive copies on subsequent renders. Public hosting changes do not alter the frozen model, threshold, splits, or evaluation results.
 
@@ -16,7 +16,7 @@ The published result is protected by `reports/metrics/freeze.json` and `evaluati
 
 Completed validation: 17 Python tests, six JavaScript checks against Python counts, fresh development refit with matching results, clean-kernel execution of all four notebooks, Quarto rendering, and local link/asset/anchor/alt-text checks. Desktop preview was inspected through a native browser. A dedicated mobile viewport inspection was not completed with the available browser controls; responsive CSS is present.
 
-The `.openai/hosting.json` file identifies the owner-private Sites preview. Preserve that identity and audience on edits. The GitHub Actions workflow verifies the study and uploads static output; it does not publish GitHub Pages. No public GitHub repository has been created for this study yet.
+The `.openai/hosting.json` file identifies the owner-private Sites preview. Preserve that identity and audience on edits. The GitHub Actions workflow verifies the frozen study, executes its notebooks, renders its pages, and publishes GitHub Pages from the public `robcalimente/breast-cancer-case-study` repository.
 
 Use `./study preview` on the prepared machine, or install the prerequisites in README for a fresh checkout. `.tools/` and `.venv/` are ignored local conveniences. The existing portfolio site is unchanged.
 
@@ -31,3 +31,5 @@ Biology revision for review: add a beginner's path from benign/malignant definit
 Operational notes: the current review server is static HTTP on port 4681, serving `site/_site`; keep it running for Rob's review. The local checkout contains untracked duplicate files with “2” in their names; leave them untouched. To synchronize checkouts, fetch and fast-forward Git history and copy the rendered output separately. Do not copy an entire `.git` tree over existing immutable Git objects.
 
 Biology revision checks: the six-page render and local links/anchors/alt text pass. Both schematic SVGs parse and include an explicit explanation that the drawings have no diagnosis. The rendered glossary contains ten features and its expansion was checked in Chrome. The published median statements match the saved development results (17.4 malignant, 12.2 benign on the source scale). Chrome was checked at 1280 × 900 and 390 × 844; the mobile diagram loads the stacked composition and the expanded glossary has no page overflow. Frozen evaluation counts remain 39 TP, 72 TN, zero FP, three FN.
+
+Model-choice explanation · October 27: the model chapter now opens with “The choice: logistic regression” and states why it was selected. A compact table derives all four candidate means directly from the saved cross-validation CSV. The prose defines five-fold validation and ROC-AUC, explains the predeclared simplicity preference and its limits, walks through scaling, weighted evidence, and probability output, and distinguishes model selection from threshold selection. Keep the chosen candidate and reason visible before the detailed explanation. The public portfolio feature also names logistic regression. Frozen model and development/evaluation artifact hashes were verified unchanged.

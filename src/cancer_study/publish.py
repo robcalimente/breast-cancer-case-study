@@ -18,6 +18,8 @@ def build_report_sources(project: Path, quality: dict, development: pd.DataFrame
     freeze = read_json(directory / "freeze.json")
     cv = pd.read_csv(directory / "cross_validation.csv")
     chosen = cv.loc[cv.model == freeze["model"], "roc_auc"]
+    candidate_means = cv.groupby("model").roc_auc.mean()
+    protocol = read_json(project / "protocol.json")
     exploration = read_json(directory / "exploration.json")
     predictions = pd.read_csv(directory / "holdout_predictions.csv", dtype={"sample_id": str})
     mistakes = predictions.loc[~predictions.correct].copy()
@@ -39,6 +41,11 @@ def build_report_sources(project: Path, quality: dict, development: pd.DataFrame
         "RADIUS_MALIGNANT_MEDIAN": f"{exploration['medians']['radius_mean']['M']:.1f}",
         "SELECTED": freeze["model"], "SELECTED_LOWER": freeze["model"].lower(),
         "CV_MEAN": f"{chosen.mean():.3f}", "CV_SD": f"{chosen.std(ddof=1):.3f}",
+        "LOGISTIC_CV": f"{candidate_means['Logistic regression']:.4f}",
+        "SVM_CV": f"{candidate_means['Calibrated RBF SVM']:.4f}",
+        "FOREST_CV": f"{candidate_means['Random forest']:.4f}",
+        "BASELINE_CV": f"{candidate_means['Majority baseline']:.4f}",
+        "AUC_TOLERANCE": f"{protocol['practical_equivalence_auc']:.3f}",
         "THRESHOLD": f"{freeze['threshold']:.6f}", "THRESHOLD_4": f"{freeze['threshold']:.4f}",
         "TN": final["tn"], "FP": final["fp"], "FN": final["fn"], "TP": final["tp"],
         "CORRECT": final["tn"] + final["tp"], "SENSITIVITY": percent(final["sensitivity"]),

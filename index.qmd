@@ -140,11 +140,35 @@ GROUP BY diagnosis;</pre><p class="small">DuckDB queries the validated table dir
 
   <section class="chapter model-section" id="models" aria-labelledby="model-title">
     <div class="chapter-label"><span class="chapter-number">04</span><span class="chapter-name">The model</span></div>
-    <div class="chapter-intro"><h2 id="model-title">Let complexity earn its place.</h2><p>A majority-class baseline, logistic regression, a calibrated RBF SVM, and a random forest share the same five validation folds. Candidate settings and the selection rule were recorded before training.</p></div>
+    <div class="chapter-intro"><h2 id="model-title">The choice: logistic regression.</h2><p><strong>It was the simplest candidate and had the highest average validation score.</strong> The more complex alternatives did not improve that score, so I kept the simpler model.</p></div>
     <div class="model-results">
-      <p>The declared rule selected <strong>Logistic regression</strong>: the simplest candidate within 0.005 ROC-AUC of the best mean validation score. Its mean validation ROC-AUC was <strong>0.996</strong>, with a fold standard deviation of 0.004.</p>
-      <figure class="figure-wide"><img src="site/assets/model-comparison.svg" loading="lazy" alt="Five-fold validation ROC-AUC comparison, including a majority baseline. Logistic regression was selected by the declared simplicity rule."><figcaption>Dots: individual folds. Diamonds: means. Fold standard deviation describes variation; it is not a confidence interval. Higher ROC-AUC indicates better ranking.</figcaption></figure>
-      <p>Scaling is fitted inside training folds. SVM calibration wraps the entire scaler-model pipeline inside its own training folds. No oversampling is used.</p>
+      <table class="model-choice-table">
+        <caption>Average ROC-AUC across the five development folds · Higher is better</caption>
+        <thead><tr><th scope="col">Candidate</th><th scope="col">Mean ROC-AUC</th></tr></thead>
+        <tbody>
+          <tr class="chosen-model"><th scope="row">Logistic regression <span class="chosen-label">Selected</span></th><td><strong>0.9956</strong></td></tr>
+          <tr><th scope="row">Calibrated RBF SVM</th><td>0.9935</td></tr>
+          <tr><th scope="row">Random forest</th><td>0.9904</td></tr>
+          <tr><th scope="row">Majority-class baseline</th><td>0.5000</td></tr>
+        </tbody>
+      </table>
+      <h3>Why choose it over the other models?</h3>
+      <p>I compared all four candidates on the same five splits of the 455 development samples. Each round trained on four parts and scored the remaining part. Every development sample was therefore scored by a model that had not trained on it.</p>
+      <p>The comparison uses <strong>ROC-AUC</strong>: how well a model ranks malignant samples above benign ones across possible cutoffs. A score of 0.5 is chance-level ranking; 1.0 is perfect ranking. Accuracy and missed samples are assessed separately, after choosing a cutoff. <a class="citation" href="https://scikit-learn.org/1.7/modules/model_evaluation.html#roc-metrics">About ROC-AUC</a></p>
+      <p>The SVM can learn a curved boundary between groups; the forest combines many decision trees. Those were useful alternatives to test, but neither earned a higher mean validation score here.</p>
+      <p><strong>The selection rule was set before training:</strong> choose the simplest candidate within 0.005 of the best mean ROC-AUC. The declared order was logistic regression, calibrated RBF SVM, then random forest. Logistic regression satisfied that rule and also ranked first on the mean score. The 0.005 allowance was a study design choice, not a statistical test of equivalence.</p>
+      <p>Keeping one scaler and one weighted model makes the pipeline easier to inspect and reproduce. These small score differences do not establish that logistic regression is best for every dataset or that it is ready for clinical use.</p>
+      <figure class="figure-wide"><img src="site/assets/model-comparison.svg" loading="lazy" alt="Five-fold validation ROC-AUC comparison, including a majority baseline. Logistic regression was selected by the declared simplicity rule."><figcaption>Dots: individual folds. Diamonds: means. Logistic regression's fold standard deviation was 0.004. This describes variation across splits; it is not a confidence interval.</figcaption></figure>
+      <h3>What does logistic regression actually do?</h3>
+      <p>It learns a weighted combination of the thirty nuclear measurements to estimate whether a sample belongs to the malignant group. The weights are learned from samples with known diagnoses. Despite the word “regression,” this is a classification model: its output helps distinguish two groups.</p>
+      <ol class="model-steps" aria-label="How the selected model makes a prediction">
+        <li><strong>Put measurements on a common scale.</strong><span>Area and texture have very different numerical ranges. A scaler centers each measurement and adjusts its spread using only the training samples.</span></li>
+        <li><strong>Combine the evidence.</strong><span>The model multiplies each scaled measurement by a learned weight, then adds the contributions and an intercept. L2 regularization, a penalty on large weights, discourages an overly extreme fit.</span></li>
+        <li><strong>Turn the score into a probability.</strong><span>A smooth S-shaped function maps the combined score to a value between 0 and 1. Higher values mean the model assigns a greater probability to the malignant label. A separate cutoff turns that estimate into a class prediction.</span></li>
+      </ol>
+      <p class="small">The weights describe the fitted model's associations. Correlated measurements make them unsuitable as isolated explanations of what causes cancer. <a class="citation" href="https://scikit-learn.org/1.7/modules/linear_model.html#logistic-regression">How logistic regression works</a></p>
+      <p><strong>The model choice and the decision cutoff are separate choices.</strong> First I selected this pipeline using development data. Next I chose its cutoff, also using development data. Both were frozen before evaluating the 114 reserved samples. The next chapter shows why the cutoff changes which mistakes the model makes.</p>
+      <p class="small">Scaling is fitted inside training folds. SVM calibration wraps the entire scaler-model pipeline inside its own training folds. No oversampling is used.</p>
       <a class="text-link" href="notebooks/03_model_selection.html">Inspect model development →</a>
     </div>
   </section>
