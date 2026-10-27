@@ -96,6 +96,12 @@ External validation would require independent breast-mass samples with compatibl
 
 ## References and inspiration
 
+- The biology primer uses NCI patient information and the original research. Its nuclear-measurement drawings are explanatory schematics with no diagnosis; they are not source specimens or model inputs.
+- [NCI: what cancer, benign, and malignant mean](https://www.cancer.gov/about-cancer/understanding/what-is-cancer)
+- [NCI: nucleus](https://www.cancer.gov/publications/dictionaries/cancer-terms/def/nucleus)
+- [NCI: breast-cancer diagnosis](https://www.cancer.gov/types/breast/diagnosis)
+- [NCI: breast-cancer staging and grading](https://www.cancer.gov/types/breast/stages)
+- [Wolberg and colleagues: computer-derived nuclear features in breast cytology (1995)](https://pubmed.ncbi.nlm.nih.gov/7628853/)
 - [UCI Breast Cancer Wisconsin (Diagnostic)](https://doi.org/10.24432/C5DW2B)
 - [scikit-learn: preprocessing and data leakage](https://scikit-learn.org/stable/common_pitfalls.html)
 - [scikit-learn: cross-validation](https://scikit-learn.org/stable/modules/cross_validation.html)

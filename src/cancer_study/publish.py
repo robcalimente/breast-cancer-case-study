@@ -8,10 +8,12 @@ import pandas as pd
 from .common import digest, read_json, write_json
 from .evaluate import metrics
 from .story_assets import write_outcome_maps
+from .biology_figures import write_measurement_schematics
 
 
 def build_report_sources(project: Path, quality: dict, development: pd.DataFrame, final: dict) -> None:
     write_outcome_maps(project)
+    write_measurement_schematics(project)
     directory = project / "reports/metrics"
     freeze = read_json(directory / "freeze.json")
     cv = pd.read_csv(directory / "cross_validation.csv")
@@ -33,6 +35,8 @@ def build_report_sources(project: Path, quality: dict, development: pd.DataFrame
         "CHECKS": len(quality["checks"]), "DEV_N": len(development), "HOLDOUT_N": final["n"],
         "HOLDOUT_POS": final["tp"] + final["fn"], "HOLDOUT_NEG": final["tn"] + final["fp"],
         "RADIUS_CORR": f"{exploration['radius_perimeter_correlation']:.3f}",
+        "RADIUS_BENIGN_MEDIAN": f"{exploration['medians']['radius_mean']['B']:.1f}",
+        "RADIUS_MALIGNANT_MEDIAN": f"{exploration['medians']['radius_mean']['M']:.1f}",
         "SELECTED": freeze["model"], "SELECTED_LOWER": freeze["model"].lower(),
         "CV_MEAN": f"{chosen.mean():.3f}", "CV_SD": f"{chosen.std(ddof=1):.3f}",
         "THRESHOLD": f"{freeze['threshold']:.6f}", "THRESHOLD_4": f"{freeze['threshold']:.4f}",
@@ -173,6 +177,12 @@ External validation would require independent breast-mass samples with compatibl
 
 ## References and inspiration
 
+- The biology primer uses NCI patient information and the original research. Its nuclear-measurement drawings are explanatory schematics with no diagnosis; they are not source specimens or model inputs.
+- [NCI: what cancer, benign, and malignant mean](https://www.cancer.gov/about-cancer/understanding/what-is-cancer)
+- [NCI: nucleus](https://www.cancer.gov/publications/dictionaries/cancer-terms/def/nucleus)
+- [NCI: breast-cancer diagnosis](https://www.cancer.gov/types/breast/diagnosis)
+- [NCI: breast-cancer staging and grading](https://www.cancer.gov/types/breast/stages)
+- [Wolberg and colleagues: computer-derived nuclear features in breast cytology (1995)](https://pubmed.ncbi.nlm.nih.gov/7628853/)
 - [UCI Breast Cancer Wisconsin (Diagnostic)](https://doi.org/10.24432/C5DW2B)
 - [scikit-learn: preprocessing and data leakage](https://scikit-learn.org/stable/common_pitfalls.html)
 - [scikit-learn: cross-validation](https://scikit-learn.org/stable/modules/cross_validation.html)

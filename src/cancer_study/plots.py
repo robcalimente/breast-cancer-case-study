@@ -15,7 +15,7 @@ from .common import read_json
 from .ingest import BASE_FEATURES
 
 BENIGN, MALIGNANT, INK, MUTED, PAPER = "#217d80", "#c56636", "#252b33", "#59636f", "#ffffff"
-LABELS = {"radius_mean": "Mean radius", "texture_mean": "Mean texture", "concave_points_worst": "Worst concave points"}
+LABELS = {"radius_mean": "Mean nuclear radius", "texture_mean": "Mean image texture", "concave_points_worst": "Worst concave points"}
 
 
 def style() -> None:
@@ -50,7 +50,7 @@ def render_figures(project: Path, development: pd.DataFrame, final: dict) -> Non
         ax.scatter(rows.radius_mean, rows.concave_points_worst, s=24, marker=marker,
                    c=colors[label], alpha=.70, edgecolors=PAPER, linewidths=.3,
                    label=f"{'Benign' if label == 'B' else 'Malignant'} · {len(rows)}")
-    ax.set(xlabel="Mean radius · source scale", ylabel="Worst concave points · source scale")
+    ax.set(xlabel="Mean nuclear radius · source scale", ylabel="Worst concave points · source scale")
     ax.grid(alpha=.5, zorder=0)
     ax.set_axisbelow(True)
     ax.legend(frameon=False, loc="upper left", fontsize=10)

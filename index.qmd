@@ -17,7 +17,7 @@ body-classes: study-home
     </div>
     <figure class="outcome-map">
       <picture><source media="(max-width: 600px)" srcset="site/assets/holdout-outcomes-mobile.svg"><img src="site/assets/holdout-outcomes.svg" width="788" height="202" alt="114 held-out breast-mass samples: 111 correct classifications and 3 malignant samples missed. Filled blue-green dots are correct; rust rings are missed malignant samples." fetchpriority="high"></picture>
-      <figcaption><span class="outcome-key"><i class="correct-key" aria-hidden="true"></i><strong>111</strong> correctly classified</span><span class="outcome-key"><i class="missed-key" aria-hidden="true"></i><strong>3</strong> malignant samples missed</span><span class="outcome-map-note">One mark per holdout sample · Source row order</span></figcaption>
+      <figcaption><span class="outcome-key"><i class="correct-key" aria-hidden="true"></i><strong>111</strong> correctly classified</span><span class="outcome-key"><i class="missed-key" aria-hidden="true"></i><strong>3</strong> malignant samples missed</span><span class="outcome-map-note">Retrospective model evaluation · One mark per holdout sample · Source row order</span></figcaption>
     </figure>
     <div class="hero-invitation"><p>The model got 111 of 114 reserved samples right. The 3 it missed deserve a closer look. To understand those decisions, start with the data.</p><a class="begin-link" href="#source">Follow the evidence <span aria-hidden="true">↓</span></a></div>
   </section>
@@ -38,23 +38,62 @@ body-classes: study-home
   <section class="chapter" id="source" aria-labelledby="source-title">
     <div class="chapter-label"><span class="chapter-number">01</span><span class="chapter-name">The sample</span></div>
     <div class="chapter-intro">
-      <h2 id="source-title">A breast mass, measured thirty ways.</h2>
-      <p>These are measurements of cell nuclei, computed from digitized fine needle aspirate images of breast masses. The question is specific: can those measurements distinguish samples labeled benign from samples labeled malignant?</p>
+      <h2 id="source-title">What are we actually measuring?</h2>
+      <p>A breast mass is a lump or abnormal area in the breast. Its diagnosis may be <strong>benign</strong> (non-cancerous) or <strong>malignant</strong> (cancerous). Cancer involves cells growing out of normal control. Malignant tumors can invade nearby tissue and spread elsewhere in the body; benign tumors do not invade or spread in that way. <a class="citation" href="https://www.cancer.gov/about-cancer/understanding/what-is-cancer">NCI: What is cancer?</a></p>
+      <p>Here, the measurements describe <strong>cell nuclei</strong>: the DNA-containing structures inside cells. Radius and area refer to nuclei in an image, not the dimensions of the breast lump. <a class="citation" href="https://www.cancer.gov/publications/dictionaries/cancer-terms/def/nucleus">NCI: Nucleus</a> · <a class="citation" href="https://archive.ics.uci.edu/dataset/17/breast+cancer+wisconsin+diagnostic">Dataset source</a></p>
     </div>
+
+    <div class="domain-prose">
+      <h3>From the sample to the spreadsheet.</h3>
+      <p>A <strong>fine-needle aspiration (FNA)</strong> uses a thin needle to collect cells or fluid. In the original research, sample preparations were digitized, and an operator and software identified nuclear outlines. The computer then measured their appearance. <a class="citation" href="https://www.cancer.gov/types/breast/diagnosis">NCI: Breast biopsy</a> · <a class="citation" href="https://pubmed.ncbi.nlm.nih.gov/7628853/">Original study</a></p>
+    </div>
+    <div class="sample-chain" role="img" aria-label="Breast mass, then fine-needle aspiration sample, then digitized cell nuclei, then thirty numeric features per sample.">
+      <span>Breast mass</span><i aria-hidden="true">→</i><span>FNA sample</span><i aria-hidden="true">→</i><span>Digitized nuclei</span><i aria-hidden="true">→</i><span>30 features</span>
+    </div>
+    <p class="small">This project begins with the resulting numeric table. Each row summarizes one sampled breast mass; it is not one individual cell.</p>
     <p class="dataset-summary"><strong>569 samples</strong> · <strong>30 measurements</strong> · <strong>2 diagnosis classes</strong></p>
-    <div class="source-definition">
-      <p class="small">Ten properties, from radius to concavity, are summarized three ways. The identifier is retained for tracing observations and excluded from model inputs.</p>
-      <dl class="measurement-groups">
-        <div><dt>Mean</dt><dd>The average measurement across nuclei.</dd></div>
-        <div><dt>Standard error</dt><dd>A summary of uncertainty around the mean.</dd></div>
-        <div><dt>Worst</dt><dd>The mean of the three largest values, as defined by the source.</dd></div>
+
+    <div class="domain-prose">
+      <h3>Read the measurements before the chart.</h3>
+      <p>The descriptors capture three broad ideas: <strong>size</strong>, <strong>boundary shape</strong>, and <strong>image texture</strong>. Texture means variation in grayscale brightness, not how a lump feels. <a class="citation" href="https://scikit-learn.org/stable/datasets/toy_dataset.html#breast-cancer-wisconsin-diagnostic-dataset">Feature definitions</a></p>
+    </div>
+    <figure class="figure-wide biology-figure">
+      <picture><source media="(max-width: 600px)" srcset="site/assets/nuclear-measurements-mobile.svg"><img src="site/assets/nuclear-measurements.svg" width="840" height="312" loading="lazy" alt="Schematic nuclear measurements: radius extends from a center to an outline, area lies inside it, perimeter follows it, concavity describes an inward dent, and image texture concerns grayscale brightness variation."></picture>
+      <figcaption>Conceptual drawings, not specimen images or to scale. The drawings have no diagnosis. Their purpose is to make the feature names readable.</figcaption>
+    </figure>
+    <details class="domain-details"><summary>Explore all ten nuclear measurements</summary>
+      <dl class="feature-glossary">
+        <div><dt>Radius</dt><dd>Average center-to-boundary distance.</dd></div>
+        <div><dt>Perimeter</dt><dd>Boundary length.</dd></div>
+        <div><dt>Area</dt><dd>Region enclosed by the boundary.</dd></div>
+        <div><dt>Smoothness</dt><dd>Small-scale variation in radius.</dd></div>
+        <div><dt>Compactness</dt><dd>A descriptor relating perimeter and area.</dd></div>
+        <div><dt>Concavity</dt><dd>Severity of inward dents.</dd></div>
+        <div><dt>Concave points</dt><dd>Number of concave contour portions.</dd></div>
+        <div><dt>Symmetry</dt><dd>How balanced the shape is.</dd></div>
+        <div><dt>Fractal dimension</dt><dd>A descriptor of contour complexity.</dd></div>
+        <div><dt>Texture</dt><dd>Standard deviation of grayscale values.</dd></div>
       </dl>
+      <p class="small">Plain-language descriptions of the documented features. See the <a href="https://scikit-learn.org/stable/datasets/toy_dataset.html#breast-cancer-wisconsin-diagnostic-dataset">dataset feature definitions</a> and <a href="data/README.md">local dictionary</a> for the stored names.</p>
+    </details>
+    <div class="source-definition">
+      <h3>Ten properties become thirty features.</h3>
+      <p>Each property has three summaries across the measured nuclei. <a class="citation" href="https://scikit-learn.org/stable/datasets/toy_dataset.html#breast-cancer-wisconsin-diagnostic-dataset">Dataset documentation</a></p>
+      <dl class="measurement-groups">
+        <div><dt>Mean</dt><dd>The average.</dd></div>
+        <div><dt>Standard error</dt><dd>An estimate of uncertainty in the mean.</dd></div>
+        <div><dt>Worst</dt><dd>The mean of the three largest values.</dd></div>
+      </dl>
+      <p class="small">“Worst” is just a feature-summary name. It does not rate how advanced a cancer is. A column such as <code>radius_worst</code> cannot tell us the clinical size of the lump or whether cancer has spread.</p>
     </div>
     <figure class="figure-wide source-figure">
-      <img src="site/assets/sample-map.svg" alt="455 development samples plotted by mean radius and worst concave points. Teal benign circles and amber malignant triangles show separation with overlap." width="720" height="570" loading="lazy">
-      <figcaption>Two of thirty measurements. Each mark is one breast-mass sample; color and shape show the recorded diagnosis.</figcaption>
+      <img src="site/assets/sample-map.svg" alt="455 development samples plotted by mean nuclear radius and worst concave points. Teal benign circles and amber malignant triangles show separation with overlap." width="720" height="570" loading="lazy">
+      <figcaption>Two nuclear descriptors, each summarized per sample. Position shows the measurements; color and shape identify the recorded diagnosis. Neither axis is a clinical tumor-size or cancer-stage measure.</figcaption>
     </figure>
-    <p class="small">Source: <a href="https://archive.ics.uci.edu/dataset/17/breast+cancer+wisconsin+diagnostic">UCI Wisconsin Diagnostic Breast Cancer</a> · 357 benign / 212 malignant · Donated in 1995 · CC BY 4.0. These observations concern sampled masses, not future cancer risk.</p>
+    <details class="domain-details"><summary>Who was included in the original research?</summary>
+      <p>The original publication describes 212 patients with cancer and 357 with fibrocystic breast masses, a benign diagnostic group. This was a particular comparison cohort, not a survey of every benign breast condition. Its composition matters when considering where a model might generalize. <a class="citation" href="https://pubmed.ncbi.nlm.nih.gov/7628853/">Wolberg and colleagues, 1995</a></p>
+    </details>
+    <p class="small">Source: <a href="https://archive.ics.uci.edu/dataset/17/breast+cancer+wisconsin+diagnostic">UCI Wisconsin Diagnostic Breast Cancer</a> · 357 benign / 212 malignant · CC BY 4.0. The identifier is retained for tracing samples and excluded from predictors.</p>
   </section>
 
   <section class="chapter" id="pipeline" aria-labelledby="pipeline-title">
@@ -82,10 +121,16 @@ GROUP BY diagnosis;</pre><p class="small">DuckDB queries the validated table dir
   <section class="chapter" id="exploration" aria-labelledby="exploration-title">
     <div class="chapter-label"><span class="chapter-number">03</span><span class="chapter-name">The signal</span></div>
     <div class="chapter-intro"><h2 id="exploration-title">Separation is useful. Overlap matters too.</h2><p>Class distributions differ, but a single measurement does not settle every case. These figures use only the 455 development samples; the holdout does not guide exploratory choices.</p></div>
+    <div class="domain-prose">
+      <h3>Why appearance is worth investigating.</h3>
+      <p>A pathologist is a doctor who examines cells and tissue to help diagnose disease. Nuclear size and shape also contribute to breast-cancer grading, an assessment of microscopic abnormality. That gives morphology, the study of form, a biological reason to be investigated. This dataset's binary diagnosis is a different target from grade. <a class="citation" href="https://www.cancer.gov/types/breast/stages">NCI: Grading and staging</a></p>
+      <p>The original researchers tested whether measured nuclear appearance could distinguish their benign and malignant groups. <a class="citation" href="https://pubmed.ncbi.nlm.nih.gov/7628853/">Original research</a> In our development partition, the median mean-radius value is <strong>17.4 for malignant samples</strong> and <strong>12.2 for benign samples</strong>, on the source scale.</p>
+      <p>The typical values differ, but the distributions overlap. A larger value is an association in this cohort, not a stand-alone diagnosis. The charts below show both the separation and the exceptions.</p>
+    </div>
     <figure class="figure-wide"><picture><source media="(max-width: 600px)" srcset="site/assets/distributions-mobile.svg"><img src="site/assets/distributions.svg" loading="lazy" alt="Development distributions of mean radius, mean texture, and worst concave points, with different class medians and overlapping ranges."></picture><figcaption>Class distributions on the development partition. Vertical lines mark medians; density curves are descriptive smoothing. Measurements stay on the source scale because physical units are not established in the data dictionary.</figcaption></figure>
     <div class="eda-detail">
       <h3>Thirty columns do not mean thirty independent signals.</h3>
-      <p>Mean radius and mean perimeter have a Pearson correlation of 0.998 in the development data. Several size-related measurements move together.</p>
+      <p>Mean radius and mean perimeter have a Pearson correlation of 0.998 in the development data. Several size-related measurements move together. Geometrically, radius, perimeter, and area describe related aspects of size; they are not three independent confirmations of cancer.</p>
       <figure class="figure-wide"><img src="site/assets/correlations.svg" loading="lazy" alt="Correlation matrix of ten mean features. Mean radius and mean perimeter have Pearson correlation 0.998."><figcaption>Ten mean measurements · Development data only. <a href="site/assets/correlations.svg" target="_blank" rel="noopener">View full-size chart</a>.</figcaption></figure>
       <p>That supports comparing a regularized linear model with nonlinear alternatives. All thirty measurements remain in the models; no feature ranking is fitted on the full dataset.</p>
       <p class="small">Association does not establish causation, and correlated predictors can make individual feature-importance rankings unstable.</p>
@@ -125,6 +170,7 @@ GROUP BY diagnosis;</pre><p class="small">DuckDB queries the validated table dir
   <section class="chapter" id="evaluation" aria-labelledby="evaluation-title">
     <div class="chapter-label"><span class="chapter-number">06</span><span class="chapter-name">The evidence</span></div>
     <div class="chapter-intro"><h2 id="evaluation-title">The three samples it missed.</h2><p>The selected pipeline was fitted on development data and evaluated on 114 reserved samples at the frozen threshold. The result: 111 correct classifications, 3 missed malignant samples, and 0 benign samples flagged.</p></div>
+    <p>A <strong>false negative</strong> is a malignant-labeled sample classified as benign. A <strong>false positive</strong> is a benign-labeled sample classified as malignant. These are retrospective model errors against existing diagnoses; they do not show that a person's cancer was missed during clinical care.</p>
     <figure class="figure-wide confusion-figure"><img src="site/assets/holdout-confusion.svg" loading="lazy" alt="Final holdout confusion matrix: 72 true negatives, 0 false positives, 3 false negatives, and 39 true positives."><figcaption>Observed diagnosis versus prediction · Malignant = positive. The holdout contains 42 malignant and 72 benign samples.</figcaption></figure>
     <div class="table-scroll"><table class="results-table">
       <caption>Performance at the frozen threshold</caption>
@@ -145,7 +191,11 @@ GROUP BY diagnosis;</pre><p class="small">DuckDB queries the validated table dir
   </section>
 
   <section class="chapter conclusion" aria-labelledby="conclusion-title">
-    <div><div class="chapter-label conclusion-label">What the study supports</div><h2 id="conclusion-title">A useful result. A bounded claim.</h2><p>The measurements contain a strong signal for the recorded diagnosis in this benchmark. The frozen logistic regression pipeline detected 39 of 42 malignant holdout samples and correctly cleared 72 of 72 benign ones.</p><p>The full result includes the source, the decisions, the mistakes, and the uncertainty. Those are the parts that make the work assessable and reproducible.</p><a class="text-link" href="methods.html">Read the protocol & methods →</a></div>
+    <div><div class="chapter-label conclusion-label">What the study supports</div><h2 id="conclusion-title">A useful result. A bounded claim.</h2><p>The nuclear measurements contain a strong signal for the recorded diagnosis in this benchmark. The frozen logistic regression pipeline detected 39 of 42 malignant holdout samples and correctly cleared 72 of 72 benign ones.</p><p>The full result includes the source, the decisions, the mistakes, and the uncertainty. Those are the parts that make the work assessable and reproducible.</p><a class="text-link" href="methods.html">Read the protocol & methods →</a></div>
+    <details class="domain-details clinical-context"><summary>How does this differ from a full breast-cancer diagnosis?</summary>
+      <p>A pathologist examines biopsy material and reports findings. Further testing measures biomarkers, characteristics of the cancer cells such as hormone-receptor and HER2 status. These help characterize breast cancer and guide treatment. <a class="citation" href="https://www.cancer.gov/types/breast/diagnosis">NCI: Diagnosis and biomarkers</a></p>
+      <p><strong>Grade</strong> concerns how abnormal cells and tissue look under a microscope. <strong>Stage</strong> describes the extent of cancer, including its size and spread; breast-cancer staging also uses other tumor characteristics. This table contains no grade, stage, receptor-status, treatment, or survival labels, so this classifier does not estimate them. <a class="citation" href="https://www.cancer.gov/types/breast/stages">NCI: Breast-cancer stages</a></p>
+    </details>
     <ul class="limits"><li><b>A historical benchmark</b>A random split within one dataset does not establish performance on another hospital, collection process, or time period.</li><li><b>A specific observation unit</b>These are sampled breast masses. The analysis does not establish future-risk prediction or population-screening performance.</li><li><b>Limited metadata</b>The supplied table does not support an assessment of performance across demographic groups or institutions.</li><li><b>A next study, with new evidence</b>External validation would need compatible measurements and independent samples. Any model revision would require new evaluation evidence.</li></ul>
   </section>
 

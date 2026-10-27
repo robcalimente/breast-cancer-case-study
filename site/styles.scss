@@ -193,3 +193,25 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
 }
+
+/* Biological context follows the article's existing reading measure. */
+.domain-prose, .domain-details { max-width: 700px; margin-left: auto; margin-right: auto; }
+.chapter .biology-figure { max-width: 960px; }
+.citation { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: .78em; text-decoration-thickness: 1px; }
+.sample-chain { display: flex; align-items: center; justify-content: center; gap: 1.15rem; max-width: 960px; margin: 2rem auto; padding: 1.4rem 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.sample-chain span { font-size: .9rem; font-weight: 600; }
+.sample-chain i { font-size: 1.2rem; color: var(--accent); font-style: normal; }
+.feature-glossary { margin: 1rem 0; }
+.feature-glossary>div { display: grid; grid-template-columns: 9rem 1fr; gap: 1rem; padding: .7rem 0; border-bottom: 1px solid var(--line); }
+.feature-glossary dt { font-size: .9rem; font-weight: 600; }
+.feature-glossary dd { font-size: .9rem; line-height: 1.7; margin: 0; }
+.domain-details[open] { margin-bottom: 2rem; }
+.domain-details summary { font-size: .9rem; }
+.domain-details>p { margin-top: 1rem; }
+.clinical-context { margin: 2rem auto; }
+@media (max-width: 600px) {
+ .sample-chain { flex-direction: column; gap: .6rem; padding: 1rem 0; }
+ .sample-chain i { transform: rotate(90deg); line-height: 1; }
+ .feature-glossary>div { grid-template-columns: 7rem 1fr; gap: .7rem; }
+ .citation { font-size: .82em; }
+}

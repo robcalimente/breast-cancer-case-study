@@ -1034,7 +1034,7 @@ L 274.290729 206.035781
 " style="fill: none; stroke: #d7dfd8; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
    <g id="text_14">
-    <text style="font-weight: 600; font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #252b33" x="162.378568" y="16.318125" transform="rotate(-0 162.378568 16.318125)">Mean radius</text>
+    <text style="font-weight: 600; font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #252b33" x="162.378568" y="16.318125" transform="rotate(-0 162.378568 16.318125)">Mean nuclear radius</text>
    </g>
    <g id="legend_1">
     <g id="patch_5">
@@ -2053,7 +2053,7 @@ L 561.757396 206.035781
 " style="fill: none; stroke: #d7dfd8; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
    <g id="text_29">
-    <text style="font-weight: 600; font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #252b33" x="449.845234" y="16.318125" transform="rotate(-0 449.845234 16.318125)">Mean texture</text>
+    <text style="font-weight: 600; font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #252b33" x="449.845234" y="16.318125" transform="rotate(-0 449.845234 16.318125)">Mean image texture</text>
    </g>
   </g>
   <g id="axes_3">
